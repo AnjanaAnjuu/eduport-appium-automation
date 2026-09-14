@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "login_number": "9995759936",
+  "course_name": "JEE Repeater 2027",
+  "server_timezone": null,
+  "weekly_refresh_time": null,
+  "boundary_max_wait_seconds": 60,
+  "immediate_update_timeout_seconds": 20,
+  "selectors": {
+    "home_tab": [
+      "accessibility id",
+      "Home"
+    ],
+    "course_title": [
+      "accessibility id",
+      "JEE Repeater 2027"
+    ],
+    "home_coins": null,
+    "today_coins": null,
+    "weekly_coins": null,
+    "all_time_coins": null,
+    "result_total": null,
+    "result_correct": null,
+    "result_wrong": null,
+    "result_unknown": null,
+    "result_coins": null,
+    "start_total": null,
+    "collect_coins": null,
+    "close_result": null,
+    "coins_collected": null,
+    "collected_value": null,
+    "status_indicator": null,
+    "resume_test": null,
+    "leaderboard_screen": null,
+    "log_rows": null,
+    "log_end": null,
+    "log_scroll_container": null,
+    "chemistry_subject": [
+      "accessibility id",
+      "Chemistry"
+    ],
+    "chemistry_chapter": [
+      "xpath",
+      "//android.view.View[contains(@content-desc, 'Some Basic Concepts of Chemistry') and contains(@content-desc, 'Completed')]"
+    ],
+    "problem_quiz_row": [
+      "accessibility id",
+      "Problem Based Questions"
+    ]
+  },
+  "paths": {
+    "home": [],
+    "course": [],
+    "leaderboard": [],
+    "balance_today": [],
+    "balance_weekly": [],
+    "balance_all_time": [],
+    "history_today": [],
+    "history_weekly": [],
+    "history_all_time": [],
+    "problem_quiz_route": [
+      {
+        "action": "tap",
+        "target": "chemistry_subject"
+      },
+      {
+        "action": "tap",
+        "target": "chemistry_chapter"
+      },
+      {
+        "action": "wait_visible",
+        "target": "problem_quiz_row"
+      }
+    ]
+  },
+  "history": {
+    "row_pattern": null,
+    "max_pages": 20
+  },
+  "cases": {
+    "TC001": {
+      "scenario": "New user starts with zero coins",
+      "ready": false,
+      "is_new_user": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC001: Requires a genuinely new user with independently verified zero opening coins; the supplied account is not verified as new."
+    },
+    "TC002": {
+      "scenario": "Topic/concept quiz earned coins",
+      "ready": false,
+      "quiz_kind": "topic_concept",
+      "requires_seed_provider": true,
+      "skip_reason": "TC002: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC003": {
+      "scenario": "Subtopic quiz earned coins",
+      "ready": false,
+      "quiz_kind": "subtopic",
+      "requires_seed_provider": true,
+      "skip_reason": "TC003: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC004": {
+      "scenario": "Practice quiz earned coins",
+      "ready": false,
+      "quiz_kind": "practice",
+      "requires_seed_provider": true,
+      "skip_reason": "TC004: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC005": {
+      "scenario": "Exam awards ten coins",
+      "ready": false,
+      "quiz_kind": "exam",
+      "expected_coins": 10,
+      "requires_seed_provider": true,
+      "skip_reason": "TC005: Requires an independently prepared Exam scenario with configured 10-coin reward; a Chemistry problem-quiz route does not supply that exam fixture."
+    },
+    "TC006": {
+      "scenario": "Daily task awards ten coins",
+      "ready": false,
+      "quiz_kind": "daily_task",
+      "expected_coins": 10,
+      "requires_seed_provider": true,
+      "skip_reason": "TC006: Requires an independently prepared Daily Task with configured 10-coin reward; that task fixture is not configured."
+    },
+    "TC007": {
+      "scenario": "Home reflects earned coins",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC007: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC008": {
+      "scenario": "Today coins update immediately",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC008: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC009": {
+      "scenario": "All-time coins update immediately",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC009: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC010": {
+      "scenario": "Weekly coins update immediately",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC010: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC011": {
+      "scenario": "Today coins reset at real server midnight",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC011: Requires confirmed server timezone, nonzero seeded Today coins, expected before/after balances, and observation near real midnight."
+    },
+    "TC012": {
+      "scenario": "Weekly leaderboard refreshes Tuesday",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC012: Requires confirmed server timezone, Tuesday refresh time, seeded weekly history, expected before/after values, and a real boundary observation."
+    },
+    "TC013": {
+      "scenario": "Today coin log is complete and filtered",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC013: Requires inspected Today ledger selectors, full pagination/end sentinel, confirmed timezone, and independently seeded expected transactions."
+    },
+    "TC014": {
+      "scenario": "This Week coin log is complete",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC014: Requires inspected This Week ledger selectors, full pagination/end sentinel, confirmed timezone, and complete seeded Tuesday-Monday history."
+    },
+    "TC015": {
+      "scenario": "All-time coin log is complete",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC015: Requires inspected All Time ledger selectors, full pagination/end sentinel, and independently known transactions from multiple dates."
+    },
+    "TC016": {
+      "scenario": "Result counts match authored answers",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC016: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC017": {
+      "scenario": "Change correct selection to wrong; defined indicator behavior",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC017: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC018": {
+      "scenario": "Positive result enables Collect Coins",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC018: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC019": {
+      "scenario": "Negative result disables/hides collection and permits Close",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC019: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC020": {
+      "scenario": "Collection credits displayed reward exactly once",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC020: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC021": {
+      "scenario": "Review/recollection cannot credit coins twice",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC021: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC022": {
+      "scenario": "Subsequent review hides Coins Collected",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC022: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC023": {
+      "scenario": "Adaptive deletion preserves collected reward",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC023: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing. Also requires an authorized staging admin-change/reset provider; none is configured."
+    },
+    "TC024": {
+      "scenario": "Adaptive addition preserves old reward and updates correct count",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC024: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing. Also requires an authorized staging admin-change/reset provider; none is configured."
+    },
+    "TC025": {
+      "scenario": "New question increases start count without changing past coins",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC025: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing. Also requires an authorized staging admin-change/reset provider; none is configured."
+    },
+    "TC026": {
+      "scenario": "Pending question preserves positive reward and updates negative Submit value",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC026: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing. Also requires an authorized staging admin-change/reset provider; none is configured."
+    },
+    "TC027": {
+      "scenario": "Leaving incomplete quiz awards no coins",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC027: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC028": {
+      "scenario": "Resume Test awards coins only after completion",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC028: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC029": {
+      "scenario": "Summary total question count",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC029: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC030": {
+      "scenario": "Summary correct/wrong/I-do-not-know counts",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC030: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC031": {
+      "scenario": "Post-collection navigation to Leaderboard if provided",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC031: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC032": {
+      "scenario": "Zero result never credits coins",
+      "ready": false,
+      "expected_coins": 0,
+      "requires_seed_provider": true,
+      "skip_reason": "TC032: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing."
+    },
+    "TC033": {
+      "scenario": "New question during resume recalculates count/reward",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC033: Chemistry / Some Basic Concepts / Importance of Chemistry: Problem Based Questions was non-clickable and did not open; verified answer key, result/coin selectors and independent attempt data remain missing. Also requires an authorized staging admin-change/reset provider; none is configured."
+    },
+    "TC034": {
+      "scenario": "Home/Today/Week/All-time reconcile to actual ledger",
+      "ready": false,
+      "requires_seed_provider": true,
+      "skip_reason": "TC034: Requires complete transaction ledger, inspected Home/Today/Weekly/All-time balance selectors, and confirmed server timezone."
+    }
+  },
+  "target": {
+    "subject": "Chemistry",
+    "chapter": "Some Basic Concepts of Chemistry",
+    "subtopic": "Importance of Chemistry",
+    "quiz": "Problem Based Questions",
+    "observed_access": "row non-clickable; tap did not open quiz; chapter 0/13 Completed; Start here points to video"
+  }
+}

@@ -1,0 +1,1 @@
+"""Profile account details tests."""

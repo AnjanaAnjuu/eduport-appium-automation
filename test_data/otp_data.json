@@ -1,0 +1,6 @@
+{
+  "invalid_otp": "0000",
+  "incomplete_otp": "12",
+  "otp_length": 4,
+  "resend_timeout": 40
+}

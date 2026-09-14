@@ -1,0 +1,8 @@
+{
+  "sample_mobile_number": "9876543210",
+  "invalid_mobile_number": "123",
+  "default_country_code": "+91",
+  "alternate_country_code": "+1",
+  "max_mobile_length": 10,
+  "invalid_characters": ["abc", "98@76-54"]
+}

@@ -1,0 +1,36 @@
+{
+  "mobile_number": "6224572310",
+  "valid_names": [
+    "Ava",
+    "Test User"
+  ],
+  "invalid_short_name": "ab",
+  "name_policy": {
+    "allow_numeric_only_names": null,
+    "allow_special_only_names": null
+  },
+  "rapid_tap_count": 5,
+  "duplicate_observation_seconds": 3,
+  "expected_profile_create_delta": null,
+  "selectors": {
+    "screen": null,
+    "name_field": null,
+    "female": null,
+    "male": null,
+    "save_continue": null,
+    "course_selection": null,
+    "female_selected": null,
+    "male_selected": null,
+    "name_error": null,
+    "gender_error": null
+  },
+  "staging_api": {
+    "base_url": null,
+    "mobile_response_key": "mobile_number",
+    "restore_token_response_key": "restore_token",
+    "snapshot": null,
+    "prepare": null,
+    "restore": null,
+    "probe": null
+  }
+}
