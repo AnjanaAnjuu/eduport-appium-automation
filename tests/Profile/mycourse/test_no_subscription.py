@@ -40,6 +40,7 @@ import pytest
 from pages.Login.login_page import LoginPage
 from pages.Login.otp_page import OtpTypePage
 from pages.Profile.mycourse.no_subscription_page import MycourseNoSubscriptionPage
+from tests.Profile.mycourse.live_support import live_data, LiveEmptyPage
 
 pytestmark = [pytest.mark.sends_otp, pytest.mark.requires_valid_otp]
 
@@ -48,7 +49,9 @@ pytestmark = [pytest.mark.sends_otp, pytest.mark.requires_valid_otp]
 def no_subscription_data():
     path = os.getenv('MYCOURSE_NO_SUBSCRIPTION_DATA')
     if not path:
-        pytest.skip('Set MYCOURSE_NO_SUBSCRIPTION_DATA with inspected selectors and a prepared empty account')
+        data = live_data()
+        data['mobile_number'] = os.environ['TEST_MOBILE_NUMBER']
+        return data
     data = json.loads(Path(path).read_text(encoding='utf-8'))
     assert data['enrollments'] == [], 'Prepare an account without active or expired enrollments'
     assert data['mobile_number'] == os.environ['TEST_MOBILE_NUMBER'], 'Configured account differs from login account'
@@ -63,6 +66,11 @@ def no_subscription_data():
 @pytest.fixture
 def no_subscription_page(request, no_subscription_data):
     data = no_subscription_data
+    if data.get('mode') == 'live_existing_account':
+        session = request.getfixturevalue('course_session')
+        with session.page(request, LiveEmptyPage, data) as page:
+            yield page
+        return
     driver = request.getfixturevalue('driver')
     page = MycourseNoSubscriptionPage(
         driver, data['selectors'], data.get('selected_attribute', 'selected'),

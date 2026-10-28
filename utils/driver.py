@@ -4,7 +4,7 @@ from appium.options.android import UiAutomator2Options
 from config.config import settings
 
 
-def create_driver():
+def create_driver(no_reset=None):
     """Create an Android Appium driver from environment-backed settings."""
     options = UiAutomator2Options()
     options.platform_name = "Android"
@@ -15,7 +15,7 @@ def create_driver():
     else:
         options.app_package = settings.app_package
         options.app_activity = settings.app_activity
-    options.no_reset = settings.no_reset
+    options.no_reset = settings.no_reset if no_reset is None else no_reset
 
     if settings.udid:
         options.udid = settings.udid
@@ -23,4 +23,8 @@ def create_driver():
     if settings.platform_version:
         options.platform_version = settings.platform_version
 
-    return webdriver.Remote(settings.appium_server_url, options=options)
+    driver = webdriver.Remote(settings.appium_server_url, options=options)
+    # UiAutomator2's XPath2 engine crashes on Flutter hierarchies containing
+    # following/preceding axes. Search selectors intentionally use those axes.
+    driver.update_settings({"enforceXPath1": True})
+    return driver

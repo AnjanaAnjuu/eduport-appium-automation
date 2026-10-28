@@ -2,6 +2,11 @@
 
 Run: venv/bin/python -m pytest tests/Profile/myaccount/test_myaccount.py
 
+Default: test_data/myaccount_ui.json runs unsaved UI cases with a verified
+signed-in account, discards edits, and checks the original values after each
+case. See README.md for supported cases and limitations. Set MYACCOUNT_TEST_DATA
+to an independent staging configuration to enable the save/request cases.
+
 Set MYACCOUNT_TEST_DATA to JSON with:
   selectors: inspected [strategy,value] pairs, or {"locator":[strategy,value],
     "attribute":"text"}. Use content-desc for Flutter labels where appropriate;
@@ -71,6 +76,17 @@ from pages.Profile.myaccount.myaccount_page import MyAccountPage
 
 pytestmark = [pytest.mark.sends_otp, pytest.mark.requires_valid_otp]
 
+# Local defaults apply only to this suite; explicit environment values win.
+_credentials_path = Path(__file__).resolve().parents[3] / 'test_data' / 'myaccount_credentials.local.json'
+TEST_CREDENTIALS = json.loads(_credentials_path.read_text()) if _credentials_path.exists() else {}
+
+
+@pytest.fixture(autouse=True)
+def myaccount_credentials(monkeypatch):
+    for key in ('TEST_MOBILE_NUMBER', 'TEST_VALID_OTP', 'ALLOW_OTP_SEND'):
+        if key not in os.environ and key in TEST_CREDENTIALS:
+            monkeypatch.setenv(key, str(TEST_CREDENTIALS[key]))
+
 
 def integration(request, name):
     try:
@@ -83,14 +99,29 @@ def integration(request, name):
 
 @pytest.fixture
 def account_case(request):
-    path = os.getenv('MYACCOUNT_TEST_DATA')
-    if not path:
-        pytest.skip('Set MYACCOUNT_TEST_DATA with inspected selectors and independent staging cases')
+    path = os.getenv('MYACCOUNT_TEST_DATA', str(Path(__file__).resolve().parents[3] / 'test_data' / 'myaccount_ui.json'))
     data = json.loads(Path(path).read_text(encoding='utf-8'))
     case_id = re.search(r'acc_\d{3}', request.node.name).group().upper()
     case = data.get('cases', {}).get(case_id)
     if not case or not case.get('ready'):
-        pytest.skip(f'{case_id}: configure baseline and ready=true')
+        pytest.skip(f"{case_id}: {(case or {}).get('skip_reason', 'configure baseline and ready=true')}")
+    if data.get('mode') == 'live_unsaved':
+        if case_id in {'ACC_011', 'ACC_012', 'ACC_020'}:
+            pytest.skip('Saving cases require staging snapshot/restore; live mode never submits changes')
+        data['mobile_number'] = os.environ['TEST_MOBILE_NUMBER']
+        if case_id == 'ACC_017':
+            live = request.getfixturevalue('myaccount_live')
+            today = live.driver.get_device_time('YYYY-MM-DD')
+            case['today'] = today
+            future_year = date.fromisoformat(today).year + 1
+            case['attempted_dob'] = f'{future_year}-01-01'
+            data['selectors']['year_future']['locator'][1] = str(future_year)
+            data['selectors']['year_current']['locator'][1] = str(future_year - 1)
+        live = request.getfixturevalue('myaccount_live')
+        request.node.user_properties.append(('tc_id', case_id))
+        with live.prepare(request, data, case):
+            yield data, case, None
+        return
     assert data['mobile_number'] == os.environ['TEST_MOBILE_NUMBER']
     page = MyAccountPage(None, data)
     for route in ('profile', 'cleanup'):
@@ -107,7 +138,7 @@ def account_case(request):
                 date.fromisoformat(details['dob'])
     for key in ('dob_steps', 'attempt_steps', 'rejection_cleanup_steps', 'validation_steps', 'back_steps'):
         for step in case.get(key, []):
-            assert step['action'] in {'tap', 'visible', 'disabled', 'absent'}
+            assert step['action'] in {'tap', 'visible', 'disabled', 'absent', 'back', 'scroll_to'}
             page.locator(step['target'])
     probe = integration(request, 'myaccount_save_probe') if case_id == 'ACC_020' else None
     prepare = integration(request, 'myaccount_prepare')
@@ -119,6 +150,9 @@ def account_case(request):
 @pytest.fixture
 def account(request, account_case):
     data, case, _ = account_case
+    if data.get('mode') == 'live_unsaved':
+        yield case['_page']
+        return
     driver = request.getfixturevalue('driver')
     page = MyAccountPage(driver, data)
     authenticated = False

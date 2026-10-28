@@ -10,13 +10,24 @@ from pages.Login.otp_page import OtpTypePage
 from pages.Profile.mycourse.active_subscription_page import (
     ActiveSubscription, MycourseSubscriptionActivePage,
 )
+from tests.Profile.mycourse.live_support import CourseSession, LiveActivePage, live_data
+
+
+@pytest.fixture(scope='module')
+def course_session():
+    session = CourseSession()
+    try:
+        session.authenticate()
+        yield session
+    finally:
+        session.driver.quit()
 
 
 @pytest.fixture(scope='module')
 def active_data():
     path = os.getenv('MYCOURSE_ACTIVE_DATA')
     if not path:
-        pytest.skip('Set MYCOURSE_ACTIVE_DATA with inspected selectors and one active enrollment')
+        return live_data()
     data = json.loads(Path(path).read_text(encoding='utf-8'))
     validator = MycourseSubscriptionActivePage(None, data['selectors'])
     for route in ('open_route', 'cleanup_route'):
@@ -34,6 +45,11 @@ def active_data():
 
 @pytest.fixture
 def active_page(request, active_data):
+    if active_data.get('mode') == 'live_existing_account':
+        session = request.getfixturevalue('course_session')
+        with session.page(request, LiveActivePage, active_data) as page:
+            yield page
+        return
     # Validate configuration before requesting the shared driver or sending OTP.
     driver = request.getfixturevalue('driver')
     page = MycourseSubscriptionActivePage(
@@ -57,4 +73,3 @@ def active_page(request, active_data):
         # The shared driver's teardown then performs supported logout and quit.
         if authenticated:
             page.navigate(active_data['cleanup_route'])
-

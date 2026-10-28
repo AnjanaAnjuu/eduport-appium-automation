@@ -40,6 +40,21 @@ class MyAccountPage(BasePage):
         self.wait.clickable(self.locator(name)).click()
 
     def route(self, name):
+        if self.data.get('mode') == 'live_unsaved':
+            if name == 'cleanup':
+                if self.driver.find_elements(*self.locator('sheet')):
+                    self.discard()
+                self.driver.back()
+                self.wait.until(lambda d: d.find_elements('accessibility id', 'Home'))
+            elif name == 'profile':
+                # Profile's title is a View; its Home tab is an ImageView.
+                tabs = self.driver.find_elements('xpath', "//android.widget.ImageView[@content-desc='Profile']")
+                if tabs:
+                    self.driver.execute_script('mobile: clickGesture', {'elementId': tabs[0].id})
+                self.target('profile_screen')
+            else:
+                raise ValueError(f'Unknown live route: {name}')
+            return
         steps = self.data['routes'][name]
         if not steps:
             raise ValueError(f'Configure routes.{name}')
@@ -48,8 +63,22 @@ class MyAccountPage(BasePage):
 
     def open(self):
         self.target('profile_screen')
+        # My Account sits below the initially visible Profile options.
+        for _ in range(12):
+            entries = self.driver.find_elements(*self.locator('account_entry'))
+            if any(entry.is_displayed() for entry in entries):
+                break
+            self.scroll_profile('up')
         self.tap('account_entry')
         self.wait_loaded()
+
+    def scroll_profile(self, direction):
+        size = self.driver.get_window_size()
+        self.driver.execute_script('mobile: swipeGesture', {
+            'left': int(size['width'] * .05), 'top': int(size['height'] * .2),
+            'width': int(size['width'] * .9), 'height': int(size['height'] * .6),
+            'direction': direction, 'percent': .2, 'speed': 300,
+        })
 
     def wait_loaded(self):
         self.target('sheet')
@@ -66,6 +95,21 @@ class MyAccountPage(BasePage):
             self.wait.until(lambda driver: not driver.is_keyboard_shown())
 
     def gender_selected(self, gender):
+        if self.data.get('gender_visual_border'):
+            # This Flutter build exposes neither selected nor checked state.
+            # Its selected card has a continuous white top border. Sample only
+            # the top middle section, away from the white icon and label.
+            from io import BytesIO
+            from PIL import Image
+            rect = self.target(gender.lower()).rect
+            screenshot = Image.open(BytesIO(self.driver.get_screenshot_as_png())).convert('RGB')
+            scale = screenshot.width / self.driver.get_window_size()['width']
+            left = int((rect['x'] + rect['width'] * .25) * scale)
+            right = int((rect['x'] + rect['width'] * .75) * scale)
+            top = int(rect['y'] * scale)
+            bottom = int((rect['y'] + rect['height'] * .08) * scale)
+            return any(sum(min(screenshot.getpixel((x, y))) > 220 for x in range(left, right))
+                       / max(1, right - left) > .8 for y in range(top, bottom))
         value = self.target(gender.lower()).get_attribute(self.data.get('selected_attribute', 'selected'))
         return str(value).lower() == 'true'
 
@@ -105,6 +149,23 @@ class MyAccountPage(BasePage):
                 assert not self.target(target).is_enabled(), f'{target} is enabled'
             elif action == 'absent':
                 self.wait.invisible(self.locator(target))
+            elif action == 'back':
+                self.driver.back()
+                self.wait.invisible(self.locator(target))
+            elif action == 'scroll_to':
+                direction = step['direction']
+                if direction not in ('up', 'down'):
+                    raise ValueError('Picker scroll direction must be up or down')
+                size = self.driver.get_window_size()
+                for _ in range(12):
+                    if any(e.is_displayed() for e in self.driver.find_elements(*self.locator(target))):
+                        break
+                    self.driver.execute_script('mobile: swipeGesture', {
+                        'left': int(size['width'] * .1), 'top': int(size['height'] * .55),
+                        'width': int(size['width'] * .8), 'height': int(size['height'] * .3),
+                        'direction': direction, 'percent': .5, 'speed': 300,
+                    })
+                self.target(target)
             else:
                 raise ValueError(f'Unsupported picker action: {action}')
 
@@ -150,7 +211,8 @@ class MyAccountPage(BasePage):
         if error_target:
             assert self.text(error_target).strip() == error_text
         else:
-            self.wait.until(lambda _: not self.save_enabled())
+            self.wait.until(lambda _: not self.save_enabled(),
+                            message='Save remains clickable for invalid/incomplete account details')
 
     def rapid_save(self, count=3):
         if not 2 <= count <= 5:

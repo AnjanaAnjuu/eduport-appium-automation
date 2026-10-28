@@ -1,0 +1,894 @@
+{
+  "mode": "live_unsaved",
+  "selectors": {
+    "profile_screen": {
+      "locator": [
+        "accessibility id",
+        "Profile"
+      ],
+      "attribute": "content-desc"
+    },
+    "profile_tab": {
+      "locator": [
+        "accessibility id",
+        "Profile"
+      ],
+      "attribute": "content-desc"
+    },
+    "sheet": {
+      "locator": [
+        "accessibility id",
+        "My Account"
+      ],
+      "attribute": "content-desc"
+    },
+    "title": {
+      "locator": [
+        "accessibility id",
+        "My Account"
+      ],
+      "attribute": "content-desc"
+    },
+    "female": {
+      "locator": [
+        "accessibility id",
+        "Female"
+      ],
+      "attribute": "content-desc"
+    },
+    "male": {
+      "locator": [
+        "accessibility id",
+        "Male"
+      ],
+      "attribute": "content-desc"
+    },
+    "save": {
+      "locator": [
+        "accessibility id",
+        "SAVE"
+      ],
+      "attribute": "content-desc"
+    },
+    "discard": {
+      "locator": [
+        "accessibility id",
+        "DON'T SAVE & EXIT"
+      ],
+      "attribute": "content-desc"
+    },
+    "picker_day": {
+      "locator": [
+        "accessibility id",
+        "Select Day"
+      ],
+      "attribute": "content-desc"
+    },
+    "picker_month": {
+      "locator": [
+        "accessibility id",
+        "Select Month"
+      ],
+      "attribute": "content-desc"
+    },
+    "picker_year": {
+      "locator": [
+        "accessibility id",
+        "Select Year"
+      ],
+      "attribute": "content-desc"
+    },
+    "day_15": {
+      "locator": [
+        "accessibility id",
+        "15"
+      ],
+      "attribute": "content-desc"
+    },
+    "day_31": {
+      "locator": [
+        "accessibility id",
+        "31"
+      ],
+      "attribute": "content-desc"
+    },
+    "month_feb": {
+      "locator": [
+        "accessibility id",
+        "FEB"
+      ],
+      "attribute": "content-desc"
+    },
+    "year_2010": {
+      "locator": [
+        "accessibility id",
+        "2010"
+      ],
+      "attribute": "content-desc"
+    },
+    "year_future": {
+      "locator": [
+        "accessibility id",
+        "2027"
+      ],
+      "attribute": "content-desc"
+    },
+    "name": {
+      "locator": [
+        "class name",
+        "android.widget.EditText"
+      ],
+      "attribute": "text"
+    },
+    "account_entry": [
+      "xpath",
+      "//*[starts-with(@content-desc, 'My Account') and @clickable='true']"
+    ],
+    "day": {
+      "locator": [
+        "xpath",
+        "//*[@content-desc='Date Of Birth']/following-sibling::android.view.View[1]"
+      ],
+      "attribute": "content-desc"
+    },
+    "month": {
+      "locator": [
+        "xpath",
+        "//*[@content-desc='Date Of Birth']/following-sibling::android.view.View[2]"
+      ],
+      "attribute": "content-desc"
+    },
+    "year": {
+      "locator": [
+        "xpath",
+        "//*[@content-desc='Date Of Birth']/following-sibling::android.view.View[3]"
+      ],
+      "attribute": "content-desc"
+    },
+    "year_current": {
+      "locator": [
+        "accessibility id",
+        "2026"
+      ],
+      "attribute": "content-desc"
+    }
+  },
+  "routes": {
+    "profile": [
+      "profile_tab"
+    ],
+    "cleanup": [
+      "profile_tab"
+    ]
+  },
+  "gender_visual_border": true,
+  "save_enabled_attribute": "clickable",
+  "cases": {
+    "ACC_001": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ]
+    },
+    "ACC_002": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ]
+    },
+    "ACC_003": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ]
+    },
+    "ACC_004": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ]
+    },
+    "ACC_005": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ]
+    },
+    "ACC_006": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ]
+    },
+    "ACC_007": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ]
+    },
+    "ACC_008": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ]
+    },
+    "ACC_009": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ]
+    },
+    "ACC_010": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ]
+    },
+    "ACC_011": {
+      "ready": false,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ],
+      "skip_reason": "Saving cannot be safely restored: this account has unset gender/DOB and the UI has no clear controls; provide staging snapshot/restore."
+    },
+    "ACC_012": {
+      "ready": false,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ],
+      "skip_reason": "Persistence needs staging snapshot/restore for the initially unset gender/DOB."
+    },
+    "ACC_013": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ]
+    },
+    "ACC_014": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ]
+    },
+    "ACC_015": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ]
+    },
+    "ACC_016": {
+      "ready": false,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ],
+      "skip_reason": "Provide the confirmed invalid-name policy and expected validation message."
+    },
+    "ACC_017": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ],
+      "attempted_dob": "2027-01-01",
+      "today": "2026-09-15",
+      "rejection": "picker",
+      "attempt_steps": [
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "visible",
+          "target": "picker_year"
+        },
+        {
+          "action": "scroll_to",
+          "target": "year_current",
+          "direction": "down"
+        },
+        {
+          "action": "absent",
+          "target": "year_future"
+        }
+      ],
+      "rejection_cleanup_steps": [
+        {
+          "action": "back",
+          "target": "picker_year"
+        }
+      ]
+    },
+    "ACC_018": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ],
+      "attempted_dob": "2010-02-31",
+      "rejection": "form",
+      "attempt_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_31"
+        }
+      ]
+    },
+    "ACC_019": {
+      "ready": true,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ],
+      "back_behavior": "discard"
+    },
+    "ACC_020": {
+      "ready": false,
+      "updated": {
+        "name": "Anjana Test",
+        "gender": "Male",
+        "dob": "2010-02-15"
+      },
+      "dob_steps": [
+        {
+          "action": "tap",
+          "target": "day"
+        },
+        {
+          "action": "tap",
+          "target": "day_15"
+        },
+        {
+          "action": "tap",
+          "target": "month"
+        },
+        {
+          "action": "tap",
+          "target": "month_feb"
+        },
+        {
+          "action": "tap",
+          "target": "year"
+        },
+        {
+          "action": "tap",
+          "target": "year_2010"
+        }
+      ],
+      "skip_reason": "Requires actual account-update request monitoring and staging snapshot/restore."
+    }
+  },
+  "dob_read_format": "%d %m %y"
+}

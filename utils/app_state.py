@@ -12,13 +12,32 @@ def ensure_logged_out(driver) -> None:
         "//*[@content-desc='Send OTP' or @content-desc='OTP Verifications' "
         "or @content-desc='Home' or @content-desc='Profile' "
         "or @content-desc='ANALYSE' or @content-desc='Sign Out' "
-        "or @content-desc='Sign out' or @resource-id='com.google.android.gms:id/cancel']",
+        "or @content-desc='Skip' or @content-desc='Sign out' "
+        "or @resource-id='com.google.android.gms:id/cancel' "
+        "or @resource-id='com.android.permissioncontroller:id/permission_allow_button']",
     )
     page.element(ready)
     if driver.find_elements(AppiumBy.ACCESSIBILITY_ID, 'Send OTP'):
         return
     if driver.find_elements(AppiumBy.ID, 'com.google.android.gms:id/cancel'):
         return  # LoginPage handles the phone hint dialog.
+    permission = driver.find_elements(
+        AppiumBy.ID, 'com.android.permissioncontroller:id/permission_allow_button'
+    )
+    if permission:
+        permission[0].click()
+        # Existing accounts can land on onboarding, Home, or Profile after the
+        # Android notification prompt.  Do not assume onboarding is next.
+        page.wait.until(
+            lambda d: not d.find_elements(
+                AppiumBy.ID,
+                'com.android.permissioncontroller:id/permission_allow_button',
+            )
+        )
+        page.element(ready)
+        if (driver.find_elements(AppiumBy.ACCESSIBILITY_ID, 'Send OTP')
+                or driver.find_elements(AppiumBy.ID, 'com.google.android.gms:id/cancel')):
+            return
     if driver.find_elements(AppiumBy.ACCESSIBILITY_ID, 'OTP Verifications'):
         return
     skip = driver.find_elements(AppiumBy.ACCESSIBILITY_ID, 'Skip')

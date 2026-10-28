@@ -1,0 +1,42 @@
+{
+  "mobile_number": "9995759936",
+  "course": "JEE Repeater 2027",
+  "placeholder": "Search \"Thermodynamics\"",
+  "valid_keyword": "Physics",
+  "partial_keyword": "Phys",
+  "invalid_keyword": "zzzz-no-match-9999",
+  "case_keyword": "Physics",
+  "live_keyword": "Live",
+  "live_result": "Live",
+  "subjects": ["Foundation", "Chemistry", "Maths", "Physics", "Live"],
+  "resources": ["Study Room", "Live", "Practice", "Question Library"],
+  "recent": {
+    "subjects": "Physics",
+    "chapters": "Physics",
+    "topics": "Physics",
+    "subtopics": "Physics",
+    "resources": "Live"
+  },
+  "destinations": {
+    "chapter_list": "Chapters",
+    "chapter": "Physics",
+    "topic": "Physics",
+    "subtopic": "Physics",
+    "resource": "Live"
+  },
+  "results": {
+    "all": ["Physics"],
+    "partial": ["Physics"],
+    "chapters": ["Physics"],
+    "topics": ["Physics"],
+    "subtopics": ["Physics"],
+    "resources": ["Live"]
+  },
+  "selectors": {
+    "subject_items": ["xpath", "//*[contains(@content-desc,'Browse Subjects')]/following::*[@clickable='true']"],
+    "resource_items": ["xpath", "//*[contains(@content-desc,'Browse Resources')]/following::*[@clickable='true']"],
+    "item_icon": ["xpath", ".//android.widget.ImageView"],
+    "result_items": ["xpath", "//android.widget.EditText/following::*[@clickable='true' and string-length(@content-desc)>0 and not(@content-desc='All') and not(@content-desc='Chapters') and not(@content-desc='Topics') and not(@content-desc='Subtopics') and not(@content-desc='Resources') and not(@content-desc='RESULTS')]"],
+    "result_type_child": ["xpath", ".//*[@content-desc='Chapter' or @content-desc='Topic' or @content-desc='Subtopic']"]
+  }
+}

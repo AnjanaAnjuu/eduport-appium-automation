@@ -1,0 +1,813 @@
+{
+  "ready": false,
+  "mobile_number": "9995759936",
+  "course_name": "JEE Repeater 2027",
+  "select_course_steps": [],
+  "flow_selectors": {
+    "selected_course": []
+  },
+  "selectors": {
+    "day": [],
+    "week": [],
+    "date": [],
+    "previous_day": [],
+    "next_day": [],
+    "effort_index": [],
+    "study": [],
+    "practice": [],
+    "exam": [],
+    "total": []
+  },
+  "tracker_fields": [
+    "study",
+    "practice",
+    "exam",
+    "total"
+  ],
+  "tracker_entry_steps": [],
+  "cases": {
+    "ET-STUDY-001": {
+      "ready": false,
+      "module": "Study",
+      "component": "Video",
+      "title": "Verify first-time video watch at 1x is tracked",
+      "reference_steps": "Open app > Home > Foundation > Maths Foundation > Topic > Subtopic/Concept > Play a 10-min video at 1x for the full duration",
+      "reference_expected": "10 minutes is added to Study Time based on screen time.",
+      "policy": "credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {},
+      "content_duration_seconds": 600,
+      "playback_speed": 1
+    },
+    "ET-STUDY-002": {
+      "ready": false,
+      "module": "Study",
+      "component": "Video",
+      "title": "Verify 1.25x playback calculation",
+      "reference_steps": "Play a 10-min Subtopic/Concept video at 1.25x for the full video",
+      "reference_expected": "Study Time added = 10 ÷ 1.25 = 8 minutes.",
+      "policy": "credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {},
+      "content_duration_seconds": 600,
+      "playback_speed": 1.25
+    },
+    "ET-STUDY-003": {
+      "ready": false,
+      "module": "Study",
+      "component": "Video",
+      "title": "Verify 1.5x playback calculation",
+      "reference_steps": "Play a 10-min video at 1.5x for the full video",
+      "reference_expected": "Study Time added = 10 ÷ 1.5 = 6 minutes 40 seconds.",
+      "policy": "credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {},
+      "content_duration_seconds": 600,
+      "playback_speed": 1.5
+    },
+    "ET-STUDY-004": {
+      "ready": false,
+      "module": "Study",
+      "component": "Video",
+      "title": "Verify 1.75x playback calculation",
+      "reference_steps": "Play a 10-min video at 1.75x for the full video",
+      "reference_expected": "Study Time added = 10 ÷ 1.75 = 5 minutes 43 seconds.",
+      "policy": "credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {},
+      "content_duration_seconds": 600,
+      "playback_speed": 1.75
+    },
+    "ET-STUDY-005": {
+      "ready": false,
+      "module": "Study",
+      "component": "Video",
+      "title": "Verify 2x playback calculation",
+      "reference_steps": "Play a 10-min video at 2x for the full video",
+      "reference_expected": "Study Time added = 10 ÷ 2 = 5 minutes.",
+      "policy": "credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {},
+      "content_duration_seconds": 600,
+      "playback_speed": 2
+    },
+    "ET-STUDY-006": {
+      "ready": false,
+      "module": "Study",
+      "component": "Video",
+      "title": "Verify partial watch is based on screen time",
+      "reference_steps": "Watch a portion of a Subtopic/Concept video and stop",
+      "reference_expected": "Only qualifying screen time is added; unwatched duration is not added.",
+      "policy": "credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {}
+    },
+    "ET-STUDY-007": {
+      "ready": false,
+      "module": "Study",
+      "component": "Video",
+      "title": "Verify seek-forward behavior",
+      "reference_steps": "Play video, seek forward, and continue watching",
+      "reference_expected": "Only actual qualifying screen time is counted; skipped duration is not counted.",
+      "policy": "credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {}
+    },
+    "ET-STUDY-008": {
+      "ready": false,
+      "module": "Study",
+      "component": "Video",
+      "title": "Verify seek-backward behavior",
+      "reference_steps": "Play video, seek backward, and continue watching",
+      "reference_expected": "Only actual qualifying screen time is counted; replayed screen time is counted according to the playback rule.",
+      "policy": "credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {}
+    },
+    "ET-STUDY-009": {
+      "ready": false,
+      "module": "Study",
+      "component": "Video",
+      "title": "Verify repeated viewing behavior",
+      "reference_steps": "Watch the same Subtopic/Concept video again after completing it",
+      "reference_expected": "Verify the configured repeat-watch rule and that effort is not incorrectly duplicated beyond the requirement.",
+      "policy": "unresolved",
+      "category": "study",
+      "phases": {},
+      "expected_delta_seconds": {},
+      "approved_rule": ""
+    },
+    "ET-STUDY-010": {
+      "ready": false,
+      "module": "Study",
+      "component": "Video",
+      "title": "Verify Review Mode is excluded",
+      "reference_steps": "Open a completed video in Review Mode and watch for several minutes",
+      "reference_expected": "No Study Time is added from Review Mode.",
+      "policy": "no_credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {
+        "study": [
+          0,
+          0
+        ]
+      }
+    },
+    "ET-STUDY-011": {
+      "ready": false,
+      "module": "Study",
+      "component": "Video",
+      "title": "Verify downloaded video behavior",
+      "reference_steps": "Download an eligible Subtopic/Concept video, open it from Downloads, and watch",
+      "reference_expected": "Verify whether downloaded-video watch time is tracked; record behavior against the product requirement.",
+      "policy": "unresolved",
+      "category": "study",
+      "phases": {},
+      "expected_delta_seconds": {},
+      "approved_rule": ""
+    },
+    "ET-STUDY-012": {
+      "ready": false,
+      "module": "Study",
+      "component": "Video",
+      "title": "Verify Resource video is excluded",
+      "reference_steps": "Open a Resource video and watch for several minutes",
+      "reference_expected": "No Study Time should be added because Resource video effort is excluded.",
+      "policy": "no_credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {
+        "study": [
+          0,
+          0
+        ]
+      }
+    },
+    "ET-STUDY-013": {
+      "ready": false,
+      "module": "Study",
+      "component": "Video",
+      "title": "Verify private live video/session is excluded",
+      "reference_steps": "Open a private live video/session and observe effort before/after attendance",
+      "reference_expected": "No Study Time should be added for private live video/session unless a separate attendance-effort rule exists.",
+      "policy": "no_credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {
+        "study": [
+          0,
+          0
+        ]
+      }
+    },
+    "ET-STUDY-014": {
+      "ready": false,
+      "module": "Study",
+      "component": "Video",
+      "title": "Verify public live video/session is excluded",
+      "reference_steps": "Open a public live video/session and watch for several minutes",
+      "reference_expected": "No Study Time should be added for public live video/session.",
+      "policy": "no_credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {
+        "study": [
+          0,
+          0
+        ]
+      }
+    },
+    "ET-STUDY-015": {
+      "ready": false,
+      "module": "Study",
+      "component": "Quick Practice",
+      "title": "Verify quiz screen time is added to Study Time",
+      "reference_steps": "Home > Chemistry > basic Chemistry concept > open Quick Practice/Non-Adaptive Quiz > spend time answering questions",
+      "reference_expected": "Qualifying screen/attempt time is added to Study Time.",
+      "policy": "pending_credit",
+      "category": "study",
+      "phases": {
+        "attempt": [],
+        "check_pending": [],
+        "resume": [],
+        "submit": []
+      },
+      "expected_delta_seconds": {}
+    },
+    "ET-STUDY-016": {
+      "ready": false,
+      "module": "Study",
+      "component": "Quick Practice",
+      "title": "Verify quiz time is added only after submission",
+      "reference_steps": "Complete a Quick Practice quiz and note tracker before submission; submit and check again",
+      "reference_expected": "Quiz attending time is reflected only after submission.",
+      "policy": "pending_credit",
+      "category": "study",
+      "phases": {
+        "attempt": [],
+        "check_pending": [],
+        "resume": [],
+        "submit": []
+      },
+      "expected_delta_seconds": {}
+    },
+    "ET-STUDY-017": {
+      "ready": false,
+      "module": "Study",
+      "component": "Quick Practice",
+      "title": "Verify 5-minute cap on one question",
+      "reference_steps": "Stay on one quiz question for more than 5 minutes before continuing/submitting",
+      "reference_expected": "No more than 5 minutes is counted for that question.",
+      "policy": "pending_credit",
+      "category": "study",
+      "phases": {
+        "attempt": [],
+        "check_pending": [],
+        "resume": [],
+        "submit": []
+      },
+      "expected_delta_seconds": {},
+      "question_count": 1
+    },
+    "ET-STUDY-018": {
+      "ready": false,
+      "module": "Study",
+      "component": "Quick Practice",
+      "title": "Verify review time is excluded",
+      "reference_steps": "Submit quiz, enter review mode, and spend time reviewing questions",
+      "reference_expected": "Review time does not add to Study Time.",
+      "policy": "review_no_credit",
+      "category": "study",
+      "phases": {
+        "qualifying_activity": [],
+        "review": []
+      },
+      "expected_delta_seconds": {
+        "study": [
+          0,
+          0
+        ]
+      }
+    },
+    "ET-STUDY-019": {
+      "ready": false,
+      "module": "Study",
+      "component": "Problem Quiz",
+      "title": "Verify problem-based quiz tracking",
+      "reference_steps": "Home > Chemistry > basic concept > topic > Problem-Based Quiz > complete and submit",
+      "reference_expected": "Qualifying quiz time is added after submission according to the same rules as Quick Practice.",
+      "policy": "pending_credit",
+      "category": "study",
+      "phases": {
+        "attempt": [],
+        "check_pending": [],
+        "resume": [],
+        "submit": []
+      },
+      "expected_delta_seconds": {}
+    },
+    "ET-STUDY-020": {
+      "ready": false,
+      "module": "Study",
+      "component": "Problem Quiz",
+      "title": "Verify 5-minute cap on problem-based quiz question",
+      "reference_steps": "Remain on one problem-based quiz question for more than 5 minutes",
+      "reference_expected": "Maximum 5 minutes is counted for that question.",
+      "policy": "pending_credit",
+      "category": "study",
+      "phases": {
+        "attempt": [],
+        "check_pending": [],
+        "resume": [],
+        "submit": []
+      },
+      "expected_delta_seconds": {},
+      "question_count": 1
+    },
+    "ET-STUDY-021": {
+      "ready": false,
+      "module": "Study",
+      "component": "Problem Quiz",
+      "title": "Verify problem-based quiz review exclusion",
+      "reference_steps": "Submit problem-based quiz and review questions",
+      "reference_expected": "Review time does not add to Study Time.",
+      "policy": "review_no_credit",
+      "category": "study",
+      "phases": {
+        "qualifying_activity": [],
+        "review": []
+      },
+      "expected_delta_seconds": {
+        "study": [
+          0,
+          0
+        ]
+      }
+    },
+    "ET-STUDY-022": {
+      "ready": false,
+      "module": "Study",
+      "component": "PDF",
+      "title": "Verify PDF screen time in Strategy Resource",
+      "reference_steps": "Home > scroll down > Strategy Resource > open an eligible PDF > remain on PDF for known duration",
+      "reference_expected": "Screen time is added to Study Time.",
+      "policy": "credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {}
+    },
+    "ET-STUDY-023": {
+      "ready": false,
+      "module": "Study",
+      "component": "PDF",
+      "title": "Verify PDF reopened is counted again",
+      "reference_steps": "Close an eligible PDF and reopen the same PDF; spend a known duration",
+      "reference_expected": "Screen time from the second opening is counted again according to the duplicate/re-open rule.",
+      "policy": "repeat_credit",
+      "category": "study",
+      "phases": {
+        "first_open": [],
+        "second_open": []
+      },
+      "expected_delta_seconds": {
+        "study": []
+      },
+      "expected_second_delta_seconds": {
+        "study": []
+      }
+    },
+    "ET-STUDY-024": {
+      "ready": false,
+      "module": "Study",
+      "component": "PDF",
+      "title": "Verify downloaded PDF tracking",
+      "reference_steps": "Download an eligible PDF, open it from Downloads, and spend a known duration reading",
+      "reference_expected": "PDF time remains counted even when the PDF is downloaded.",
+      "policy": "credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {}
+    },
+    "ET-STUDY-025": {
+      "ready": false,
+      "module": "Study",
+      "component": "PDF",
+      "title": "Verify Live Revision PDF tracking",
+      "reference_steps": "Home > Strategy/Live area > Live > Revision Live 1 > Arithmetic Sequences > open the PDF/note and spend known time",
+      "reference_expected": "Eligible PDF/note screen time is added according to the PDF tracking rule.",
+      "policy": "credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {}
+    },
+    "ET-STUDY-026": {
+      "ready": false,
+      "module": "Study",
+      "component": "PDF",
+      "title": "Verify Foundation PDF tracking",
+      "reference_steps": "Home > Foundation > Chemistry Foundation > Chemistry > Atom, Element and Molecule > open PDF",
+      "reference_expected": "PDF screen time is added to Study Time.",
+      "policy": "credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {}
+    },
+    "ET-STUDY-027": {
+      "ready": false,
+      "module": "Study",
+      "component": "PDF",
+      "title": "Verify PDF scroll time",
+      "reference_steps": "Open eligible PDF and scroll through multiple pages while reading",
+      "reference_expected": "Qualifying screen time remains tracked; scrolling itself must not reset or stop tracking.",
+      "policy": "credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {}
+    },
+    "ET-STUDY-028": {
+      "ready": false,
+      "module": "Study",
+      "component": "In-app Live",
+      "title": "Verify in-app live session attendance tracking",
+      "reference_steps": "Attend an in-app live session and observe Effort Tracker before and after attendance",
+      "reference_expected": "Verify whether live attendance contributes to Study/Revision effort according to the product requirement; do not assume from video rules.",
+      "policy": "unresolved",
+      "category": "study",
+      "phases": {},
+      "expected_delta_seconds": {},
+      "approved_rule": ""
+    },
+    "ET-STUDY-029": {
+      "ready": false,
+      "module": "Study",
+      "component": "AI Chat",
+      "title": "Verify AI doubt clearance tracking",
+      "reference_steps": "Open AI Chat, ask/resolve doubts, and spend a known duration",
+      "reference_expected": "Verify whether AI Chat contributes to Effort Tracker; expected behavior should match the approved product requirement.",
+      "policy": "unresolved",
+      "category": "study",
+      "phases": {},
+      "expected_delta_seconds": {},
+      "approved_rule": ""
+    },
+    "ET-STUDY-030": {
+      "ready": false,
+      "module": "Study",
+      "component": "Mistake Book",
+      "title": "Verify Mistake Book review tracking",
+      "reference_steps": "Open Mistake Book and review mistakes for a known duration",
+      "reference_expected": "Verify whether Mistake Book review contributes to Effort Tracker; expected behavior should match the approved requirement.",
+      "policy": "unresolved",
+      "category": "study",
+      "phases": {},
+      "expected_delta_seconds": {},
+      "approved_rule": ""
+    },
+    "ET-STUDY-031": {
+      "ready": false,
+      "module": "Study",
+      "component": "My Notes",
+      "title": "Verify My Notes writing tracking",
+      "reference_steps": "Open My Notes and write/edit notes for a known duration",
+      "reference_expected": "Verify whether note-writing contributes to Effort Tracker; expected behavior should match the approved requirement.",
+      "policy": "unresolved",
+      "category": "study",
+      "phases": {},
+      "expected_delta_seconds": {},
+      "approved_rule": ""
+    },
+    "ET-STUDY-032": {
+      "ready": false,
+      "module": "Study",
+      "component": "Coins",
+      "title": "Verify coins navigation does not incorrectly affect Study Time",
+      "reference_steps": "Navigate through Coins screens and remain for a known duration",
+      "reference_expected": "Verify no Study Time is incorrectly added unless coin activity is explicitly defined as effort.",
+      "policy": "no_credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {
+        "study": [
+          0,
+          0
+        ]
+      }
+    },
+    "ET-REV-001": {
+      "ready": false,
+      "module": "Revision",
+      "component": "Revision Mode",
+      "title": "Verify Review Mode does not add Study Time",
+      "reference_steps": "Open previously completed content in Review Mode and spend known time",
+      "reference_expected": "No Study Time is added from Review Mode.",
+      "policy": "no_credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {
+        "study": [
+          0,
+          0
+        ]
+      }
+    },
+    "ET-REV-002": {
+      "ready": false,
+      "module": "Revision",
+      "component": "Revision PDF",
+      "title": "Verify revision PDF behavior",
+      "reference_steps": "Open an eligible revision PDF/note and spend a known duration",
+      "reference_expected": "Verify tracking according to the approved revision/PDF requirement.",
+      "policy": "unresolved",
+      "category": "study",
+      "phases": {},
+      "expected_delta_seconds": {},
+      "approved_rule": ""
+    },
+    "ET-REV-003": {
+      "ready": false,
+      "module": "Revision",
+      "component": "Revision Live",
+      "title": "Verify revision live attendance behavior",
+      "reference_steps": "Attend Revision Live 1 and check tracker before/after",
+      "reference_expected": "Verify whether revision-live attendance is tracked according to the approved requirement.",
+      "policy": "unresolved",
+      "category": "study",
+      "phases": {},
+      "expected_delta_seconds": {},
+      "approved_rule": ""
+    },
+    "ET-PRACT-001": {
+      "ready": false,
+      "module": "Practice",
+      "component": "Quiz",
+      "title": "Verify Practice activity is categorized correctly",
+      "reference_steps": "Complete a qualifying practice activity and submit",
+      "reference_expected": "Activity is reflected in the correct Effort Tracker category and time is not double-counted.",
+      "policy": "pending_credit",
+      "category": "practice",
+      "phases": {
+        "attempt": [],
+        "check_pending": [],
+        "resume": [],
+        "submit": []
+      },
+      "expected_delta_seconds": {}
+    },
+    "ET-PRACT-002": {
+      "ready": false,
+      "module": "Practice",
+      "component": "Quiz Review",
+      "title": "Verify practice review is excluded from effort",
+      "reference_steps": "Submit practice quiz and spend time reviewing answers",
+      "reference_expected": "Review time is not added where the review-exclusion rule applies.",
+      "policy": "review_no_credit",
+      "category": "practice",
+      "phases": {
+        "qualifying_activity": [],
+        "review": []
+      },
+      "expected_delta_seconds": {
+        "practice": [
+          0,
+          0
+        ]
+      }
+    },
+    "ET-EXAM-001": {
+      "ready": false,
+      "module": "Exam",
+      "component": "Exam",
+      "title": "Verify exam activity category",
+      "reference_steps": "Complete an eligible exam and submit",
+      "reference_expected": "Exam activity is categorized correctly; exact time/score contribution follows the approved exam requirement.",
+      "policy": "pending_credit",
+      "category": "exam",
+      "phases": {
+        "attempt": [],
+        "check_pending": [],
+        "resume": [],
+        "submit": []
+      },
+      "expected_delta_seconds": {}
+    },
+    "ET-EXAM-002": {
+      "ready": false,
+      "module": "Exam",
+      "component": "Exam Review",
+      "title": "Verify exam review does not double-count",
+      "reference_steps": "Submit exam, review answers, and check tracker",
+      "reference_expected": "Review time is not double-counted unless explicitly required.",
+      "policy": "review_no_credit",
+      "category": "exam",
+      "phases": {
+        "qualifying_activity": [],
+        "review": []
+      },
+      "expected_delta_seconds": {
+        "exam": [
+          0,
+          0
+        ]
+      }
+    },
+    "ET-CROSS-001": {
+      "ready": false,
+      "module": "Effort Tracker",
+      "component": "Daily",
+      "title": "Verify Daily Effort total after multiple activities",
+      "reference_steps": "Perform video, quiz and PDF activities with known durations, then open Daily Effort",
+      "reference_expected": "Daily Study/Practice/Exam/Revision values reflect only eligible activities and follow each activity rule.",
+      "policy": "aggregate",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {}
+    },
+    "ET-CROSS-002": {
+      "ready": false,
+      "module": "Effort Tracker",
+      "component": "Weekly",
+      "title": "Verify previous seven days values",
+      "reference_steps": "Perform tracked activity on different days, then navigate Previous 7 Days",
+      "reference_expected": "Each day's value appears under the correct date/category; current-day value is not duplicated.",
+      "policy": "observations",
+      "category": "study",
+      "phases": {},
+      "expected_delta_seconds": {},
+      "observations": []
+    },
+    "ET-CROSS-003": {
+      "ready": false,
+      "module": "Effort Tracker",
+      "component": "Day/Week",
+      "title": "Verify daily and weekly totals consistency",
+      "reference_steps": "Compare Daily value with corresponding weekly/day view after completing tracked activities",
+      "reference_expected": "Values are consistent and no activity is double-counted.",
+      "policy": "observations",
+      "category": "study",
+      "phases": {},
+      "expected_delta_seconds": {},
+      "observations": []
+    },
+    "ET-CROSS-004": {
+      "ready": false,
+      "module": "Effort Tracker",
+      "component": "Boundary",
+      "title": "Verify app close/reopen during tracked activity",
+      "reference_steps": "Start an eligible video/PDF, close/reopen app, continue, then check tracker",
+      "reference_expected": "Tracked time follows the supported session/resume behavior and is not incorrectly lost or duplicated.",
+      "policy": "unresolved",
+      "category": "study",
+      "phases": {},
+      "expected_delta_seconds": {},
+      "approved_rule": ""
+    },
+    "ET-CROSS-005": {
+      "ready": false,
+      "module": "Effort Tracker",
+      "component": "Duplicate",
+      "title": "Verify repeated opening does not cause unintended double counting",
+      "reference_steps": "Open and close the same eligible content repeatedly without meaningful screen time",
+      "reference_expected": "Only qualifying screen time is counted; opening alone must not create inflated effort.",
+      "policy": "no_credit",
+      "category": "study",
+      "phases": {
+        "activity": []
+      },
+      "expected_delta_seconds": {
+        "study": [
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "navigation": {
+    "ready": false,
+    "today_iso": "",
+    "days": [
+      {
+        "date_iso": "",
+        "expected_label": "Today",
+        "expected_index": [],
+        "expected_snapshot_seconds": {
+          "total": []
+        }
+      },
+      {
+        "date_iso": "",
+        "expected_label": "",
+        "expected_index": [],
+        "expected_snapshot_seconds": {
+          "total": []
+        }
+      },
+      {
+        "date_iso": "",
+        "expected_label": "",
+        "expected_index": [],
+        "expected_snapshot_seconds": {
+          "total": []
+        }
+      },
+      {
+        "date_iso": "",
+        "expected_label": "",
+        "expected_index": [],
+        "expected_snapshot_seconds": {
+          "total": []
+        }
+      },
+      {
+        "date_iso": "",
+        "expected_label": "",
+        "expected_index": [],
+        "expected_snapshot_seconds": {
+          "total": []
+        }
+      },
+      {
+        "date_iso": "",
+        "expected_label": "",
+        "expected_index": [],
+        "expected_snapshot_seconds": {
+          "total": []
+        }
+      },
+      {
+        "date_iso": "",
+        "expected_label": "",
+        "expected_index": [],
+        "expected_snapshot_seconds": {
+          "total": []
+        }
+      },
+      {
+        "date_iso": "",
+        "expected_label": "",
+        "expected_index": [],
+        "expected_snapshot_seconds": {
+          "total": []
+        }
+      }
+    ],
+    "week": {
+      "week_start_iso": "",
+      "week_end_iso": "",
+      "expected_label": "",
+      "expected_index": [],
+      "expected_snapshot_seconds": {
+        "total": []
+      }
+    }
+  },
+  "reset_to_home_steps": []
+}

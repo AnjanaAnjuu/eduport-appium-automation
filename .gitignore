@@ -8,3 +8,4 @@ screenshots/
 *.log
 *.apk
 .env
+test_data/myaccount_credentials.local.json

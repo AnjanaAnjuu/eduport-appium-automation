@@ -51,6 +51,7 @@ import pytest
 from pages.Login.login_page import LoginPage
 from pages.Login.otp_page import OtpTypePage
 from pages.Profile.mycourse.expired_subscription_page import MycourseSubscriptionExpiredPage
+from tests.Profile.mycourse.live_support import live_data, LiveExpiredPage
 
 pytestmark = [pytest.mark.sends_otp, pytest.mark.requires_valid_otp]
 CRITICAL = {2, 7, 8, 9, 10, 11, 12, 15, 16}
@@ -60,7 +61,25 @@ CRITICAL = {2, 7, 8, 9, 10, 11, 12, 15, 16}
 def expired_case(request):
     path = os.getenv('MYCOURSE_EXPIRED_DATA')
     if not path:
-        pytest.skip('Configure MYCOURSE_EXPIRED_DATA with inspected selectors and seeded cases')
+        data = live_data()
+        case_id = re.search(r'mc_exp_\d{3}', request.node.name).group().upper()
+        number = int(case_id[-3:])
+        request.node.user_properties.append(('tc_id', case_id))
+        reasons = {
+            9: 'Needs an independently prepared archived expired enrollment to verify exclusion.',
+            10: 'Needs an independently prepared unavailable expired enrollment to verify exclusion.',
+            11: 'Needs at least two known expired enrollments and independent expected records.',
+            12: 'Needs known active, expired, archived, and unavailable enrollments in one prepared scenario.',
+            13: 'Needs a known subject-wise expired enrollment and its expected subject.',
+            14: 'Needs a Continuous-sticker enrollment and the confirmed sticker visibility rule.',
+            15: 'Needs known archived/unavailable-only records; an empty screen alone does not prove exclusion.',
+            16: 'Needs an independently verified active-only enrollment scenario.',
+            17: 'Needs independent expected records for both populated Active and Expired lists.',
+        }
+        if number in reasons:
+            pytest.skip(reasons[number])
+        yield data, {'mode': 'live_existing_account'}
+        return
     data = json.loads(Path(path).read_text(encoding='utf-8'))
     case_id = re.search(r'mc_exp_\d{3}', request.node.name).group().upper()
     case = data.get('cases', {}).get(case_id)
@@ -104,6 +123,12 @@ def expired_case(request):
 @pytest.fixture
 def expired_page(request, expired_case):
     data, _ = expired_case
+    if data.get('mode') == 'live_existing_account':
+        session = request.getfixturevalue('course_session')
+        with session.page(request, LiveExpiredPage, data, 'expired') as page:
+            expired_case[1]['_page'] = page
+            yield page
+        return
     driver = request.getfixturevalue('driver')
     page = MycourseSubscriptionExpiredPage(
         driver, data['selectors'], data.get('selected_attribute', 'selected'),
@@ -141,6 +166,8 @@ def expected_rows(case, status='Expired'):
 
 
 def eligible(expired_case):
+    if expired_case[1].get('mode') == 'live_existing_account':
+        expired_case[1]['_page'].require_card('expired')
     rows = expected_rows(expired_case[1])
     assert rows, 'Seed at least one eligible expired enrollment'
     return rows

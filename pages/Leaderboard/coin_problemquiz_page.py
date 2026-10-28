@@ -1,300 +1,126 @@
-"""Coin/problem-quiz interactions. Unknown UI selectors come from test data.
+"""Page object for opening and validating a problem-based quiz."""
 
-No invented resource IDs, guessed answers, clock changes, or coin resets.
-"""
-from dataclasses import dataclass
-from datetime import datetime
 import re
-from zoneinfo import ZoneInfo
 
 from appium.webdriver.common.appiumby import AppiumBy
+from selenium.common.exceptions import TimeoutException
+
 from pages.base_page import BasePage
-from utils.waits import Waits
-
-
-class CoinConfigurationError(ValueError):
-    """The test-data contract is incomplete or unsafe."""
-
-
-@dataclass(frozen=True)
-class CoinBalances:
-    home: int
-    today: int
-    weekly: int
-    all_time: int
-
-    def delta(self, before):
-        return CoinBalances(*(getattr(self, key) - getattr(before, key)
-                              for key in ('home', 'today', 'weekly', 'all_time')))
-
-
-@dataclass(frozen=True)
-class QuizResult:
-    total: int
-    correct: int
-    wrong: int
-    unknown: int
-    coins: int
-
-
-@dataclass(frozen=True)
-class CoinTransaction:
-    transaction_id: str
-    coins: int
-    recorded_at: datetime
-
-
-def parse_integer(text, pattern=None):
-    """Reject ambiguous labels (e.g. Correct 2 / Wrong 3) without a field regex."""
-    text = text.replace('\u2212', '-').replace('\u00a0', ' ')
-    if pattern:
-        if re.compile(pattern).groups != 1:
-            raise CoinConfigurationError('Count pattern must have exactly one capture group')
-        matches = list(re.finditer(pattern, text))
-        if len(matches) != 1 or matches[0].lastindex != 1:
-            raise CoinConfigurationError('Count pattern must match once with one capture group')
-        value = matches[0].group(1)
-    else:
-        values = re.findall(r'(?<![\w.])[+-]?\d+(?:,\d{3})*(?![\w.])', text)
-        if len(values) != 1:
-            raise CoinConfigurationError(f'Expected one integer in {text!r}; configure a field pattern')
-        value = values[0]
-    if not re.fullmatch(r'[+-]?\d+(?:,\d{3})*', value.strip()):
-        raise CoinConfigurationError(f'Not an integer coin/count value: {value!r}')
-    return int(value.replace(',', ''))
-
-
-def answer_counts(answers):
-    """Expected counts come from the authored answer key, not the app's result.
-
-    Last selection wins when the same question is answered again (TC017).
-    """
-    latest = {}
-    for answer in answers:
-        if not answer.get('question_id') or answer.get('outcome') not in ('correct', 'wrong', 'unknown'):
-            raise CoinConfigurationError('Answers need question_id and correct/wrong/unknown outcome')
-        latest[answer['question_id']] = answer['outcome']
-    return {kind: list(latest.values()).count(kind) for kind in ('correct', 'wrong', 'unknown')}
 
 
 class CoinProblemQuizPage(BasePage):
-    """One page object for Home, leaderboard/logs, and problem-based quizzes."""
+    """Navigate to Problem Practice and inspect its pre-attempt screen."""
 
-    STRATEGIES = {
-        'accessibility id': AppiumBy.ACCESSIBILITY_ID, 'id': AppiumBy.ID,
-        'xpath': AppiumBy.XPATH, 'class name': AppiumBy.CLASS_NAME,
-        '-android uiautomator': AppiumBy.ANDROID_UIAUTOMATOR,
-    }
+    COURSE_SWITCHER = (AppiumBy.ACCESSIBILITY_ID, "Tap here to switch your course.")
+    HOME = (AppiumBy.ACCESSIBILITY_ID, "Home")
+    BACK = (AppiumBy.XPATH, "//android.widget.ImageView[@clickable='true'][1]")
+    HELP = (AppiumBy.XPATH, "//*[@content-desc='?' or @text='?']")
 
-    def __init__(self, driver, data, timeout=15):
-        super().__init__(driver, timeout)
-        self.data = data
-        self.selectors = data['selectors']
-        self.zone = ZoneInfo(data['server_timezone'])
+    TITLE = (AppiumBy.XPATH, "//*[contains(@content-desc,'Importance of Chemistry') or contains(@text,'Importance of Chemistry')]")
+    QUIZ_KIND = (AppiumBy.XPATH, "//*[@content-desc='Problem Practice' or @text='Problem Practice']")
+    QUESTION_COUNT = (AppiumBy.XPATH, "//*[contains(@content-desc,'Questions') or contains(@text,'Questions')]")
+    VIEW_TOPICS = (AppiumBy.XPATH, "//*[@content-desc='View topics' or @text='View topics']")
+    CORRECT_CARD = (AppiumBy.XPATH, "//*[contains(@content-desc,'Correct') and contains(@content-desc,'+4')]")
+    UNKNOWN_CARD = (AppiumBy.XPATH, "//*[contains(@content-desc,\"I don’t know\") and contains(@content-desc,'+0')]")
+    WRONG_CARD = (AppiumBy.XPATH, "//*[contains(@content-desc,'Wrong') and contains(@content-desc,'-1')]")
+    ADAPT_INFO = (AppiumBy.XPATH, "//*[contains(@content-desc,'Adapt Practice') or contains(@text,'Adapt Practice')]")
+    START = (AppiumBy.XPATH, "//*[@content-desc='Start Test' or @text='Start Test' or @content-desc='Start' or @text='Start']")
+    RESUME = (AppiumBy.XPATH, "//*[@content-desc='Resume Test' or @text='Resume Test']")
+    REVIEW = (AppiumBy.XPATH, "//*[@content-desc='Review' or @text='Review' or @content-desc='Review Test' or @text='Review Test']")
+    QUESTION_SCREEN = (AppiumBy.XPATH, "//*[contains(@content-desc,'Question 1') or contains(@text,'Question 1')]")
 
-    def locator(self, target):
-        spec = self.selectors.get(target) if isinstance(target, str) else target
-        if isinstance(spec, dict):
-            spec = spec.get('locator')
-        if not isinstance(spec, (list, tuple)) or len(spec) != 2 or spec[0] not in self.STRATEGIES or not spec[1]:
-            raise CoinConfigurationError(f'Provide the inspected locator for {target!r}')
-        return self.STRATEGIES[spec[0]], spec[1]
+    def _label_locator(self, label):
+        escaped = label.replace("'", "\\'")
+        return (
+            AppiumBy.ANDROID_UIAUTOMATOR,
+            f'new UiSelector().descriptionContains("{escaped}")',
+        )
 
-    def text(self, target):
-        element = self.element(self.locator(target))
-        # Flutter uses content-desc; normal Android labels often use text.
-        return element.get_attribute('content-desc') or element.get_attribute('text') or element.text or ''
+    def _scroll_to(self, locator, attempts=5):
+        for _ in range(attempts):
+            elements = self.driver.find_elements(*locator)
+            if elements and elements[0].is_displayed():
+                return elements[0]
+            size = self.driver.get_window_size()
+            self.driver.execute_script("mobile: scrollGesture", {
+                "left": 20,
+                "top": int(size["height"] * 0.25),
+                "width": size["width"] - 40,
+                "height": int(size["height"] * 0.65),
+                "direction": "down",
+                "percent": 0.8,
+            })
+        return self.element(locator)
 
-    def number(self, target):
-        spec = self.selectors.get(target, {})
-        pattern = spec.get('pattern') if isinstance(spec, dict) else None
-        return parse_integer(self.text(target), pattern)
+    def select_course(self, course_name):
+        if self.driver.find_elements(AppiumBy.ACCESSIBILITY_ID, course_name):
+            return
+        self.click(self.COURSE_SWITCHER)
+        self.click((AppiumBy.ACCESSIBILITY_ID, course_name))
+        self.element((AppiumBy.ACCESSIBILITY_ID, course_name))
 
-    def visible(self, target, timeout=2):
-        return self.is_visible(self.locator(target), timeout)
+    def open_named_item(self, label):
+        locator = self._label_locator(label)
+        element = self._scroll_to(locator)
+        self.driver.execute_script("mobile: clickGesture", {"elementId": element.id})
 
-    def actionable(self, target):
-        if not self.visible(target):
-            return False
-        element = self.element(self.locator(target))
-        return element.is_enabled() and element.get_attribute('clickable') == 'true'
+    def open_problem_quiz(self, subject, chapter, subtopic):
+        self.click(self.HOME)
+        self.open_named_item(subject)
+        self.open_named_item(chapter)
+        self.open_named_item(subtopic)
+        self.open_named_item("Problem Based Questions")
+        self.wait_until_loaded()
 
-    def validate_steps(self, actions):
-        if not isinstance(actions, list):
-            raise CoinConfigurationError('UI steps must be a list')
-        supported = {'tap', 'enter_text', 'wait_visible', 'wait_absent', 'back', 'hide_keyboard', 'scroll'}
-        for step in actions:
-            if not isinstance(step, dict) or step.get('action') not in supported:
-                raise CoinConfigurationError(f'Unsupported UI action: {step!r}')
-            if step['action'] not in ('back', 'hide_keyboard'):
-                self.locator(step.get('target'))
-            if step['action'] == 'enter_text' and not isinstance(step.get('text'), str):
-                raise CoinConfigurationError('enter_text needs a string text value')
-            if step['action'] == 'scroll' and (step.get('direction', 'down') not in ('up', 'down', 'left', 'right')
-                                               or not 0 < step.get('percent', .8) <= 1):
-                raise CoinConfigurationError('Scroll needs a valid direction and percent in (0, 1]')
+    def wait_until_loaded(self):
+        self.element(self.TITLE)
+        self.element(self.QUIZ_KIND)
+        self.element(self.QUESTION_COUNT)
 
-    def steps(self, actions):
-        """Execute authored UI steps only; no arbitrary scripts or shell hooks."""
-        self.validate_steps(actions)
-        for step in actions:
-            action = step.get('action')
-            target = step.get('target')
-            if action == 'tap':
-                self.click(self.locator(target))
-            elif action == 'enter_text':
-                self.enter_text(self.locator(target), step['text'])
-            elif action == 'wait_visible':
-                self.element(self.locator(target))
-            elif action == 'wait_absent':
-                self.wait.invisible(self.locator(target))
-            elif action == 'back':
-                self.driver.back()
-            elif action == 'hide_keyboard':
-                if self.driver.is_keyboard_shown():
-                    self.driver.hide_keyboard()
-            elif action == 'scroll':
-                element = self.element(self.locator(target))
-                self.driver.execute_script('mobile: scrollGesture', {
-                    'elementId': element.id, 'direction': step.get('direction', 'down'),
-                    'percent': step.get('percent', .8),
-                })
-            else:
-                raise CoinConfigurationError(f'Unsupported UI action: {action!r}')
+    @staticmethod
+    def _text(element):
+        return (element.get_attribute("content-desc") or
+                element.get_attribute("text") or element.text or "").strip()
 
-    def path(self, name):
-        actions = self.data.get('paths', {}).get(name)
-        if not actions:
-            raise CoinConfigurationError(f'Configure nonempty paths.{name}')
-        self.steps(actions)
+    def title(self):
+        return self._text(self.element(self.TITLE))
 
-    def phase(self, scenario, name):
-        actions = scenario.get('phases', {}).get(name)
-        if not actions:
-            raise CoinConfigurationError(f'Configure phases.{name} for this scenario')
-        self.steps(actions)
+    def question_count(self):
+        value = self._text(self.element(self.QUESTION_COUNT))
+        match = re.search(r"(\d+)\s*Questions?", value, re.IGNORECASE)
+        if not match:
+            raise AssertionError(f"Question count is missing from {value!r}")
+        return int(match.group(1))
 
-    def select_course(self):
-        self.path('course')
-        actual = ' '.join(self.text('course_title').split()).casefold()
-        expected = ' '.join(self.data['course_name'].split()).casefold()
-        if expected not in actual:
-            raise AssertionError(f'Expected course {self.data["course_name"]!r}, found {actual!r}')
+    def primary_action(self):
+        for state, locator in (("start", self.START), ("resume", self.RESUME),
+                               ("review", self.REVIEW)):
+            if self.is_visible(locator, timeout=1):
+                return state, locator
+        raise AssertionError("Expected Start Test, Resume Test, or Review button")
 
-    def balances(self):
-        self.path('home')
-        home = self.number('home_coins')
-        self.path('leaderboard')
-        values = {}
-        for key in ('today', 'weekly', 'all_time'):
-            self.path('balance_' + key)
-            values[key] = self.number(key + '_coins')
-        return CoinBalances(home, **values)
+    def assert_overview(self, expected):
+        assert expected["title"].casefold() in self.title().casefold()
+        assert self.question_count() == expected["questions"]
+        for locator in (self.BACK, self.HELP, self.VIEW_TOPICS, self.CORRECT_CARD,
+                        self.UNKNOWN_CARD, self.WRONG_CARD, self.ADAPT_INFO):
+            assert self.is_visible(locator), f"Missing overview element: {locator}"
 
-    def wait_balances(self, expected, timeout=20):
-        last = None
+    def assert_attempt_action(self, attempt_state):
+        actual, _ = self.primary_action()
+        expected = {
+            "first": "start",
+            "in_progress": "resume",
+            "completed": "review",
+        }[attempt_state]
+        assert actual == expected, f"Expected {expected!r} action, found {actual!r}"
 
-        def matches(_):
-            nonlocal last
-            last = self.balances()
-            return last if last == expected else False
-
-        try:
-            return Waits(self.driver, timeout).until(matches)
-        except Exception as error:
-            # Preserve assertion/runtime/config errors; annotate timeouts only.
-            from selenium.common.exceptions import TimeoutException
-            if not isinstance(error, TimeoutException):
-                raise
-            raise AssertionError(f'Coin balances did not update: expected {expected}; last observed {last}') from error
-
-    def result(self):
-        values = {key: self.number('result_' + key)
-                  for key in ('total', 'correct', 'wrong', 'unknown', 'coins')}
-        result = QuizResult(**values)
-        if any(getattr(result, key) < 0 for key in ('total', 'correct', 'wrong', 'unknown')):
-            raise AssertionError(f'Negative question counts: {result}')
-        if result.correct + result.wrong + result.unknown != result.total:
-            raise AssertionError(f'Result question counts do not sum to total: {result}')
-        return result
-
-    def answer(self, answers):
-        answer_counts(answers)  # Validate the independently authored oracle.
-        for answer in answers:
-            self.validate_steps(answer['steps'])
-        for answer in answers:
-            self.steps(answer['steps'])
-
-    def complete(self, scenario):
-        self.select_course()
-        self.phase(scenario, 'open')
-        self.answer(scenario['answers'])
-        self.phase(scenario, 'submit')
-        result = self.result()
-        expected = answer_counts(scenario['answers'])
-        for key, value in expected.items():
-            assert getattr(result, key) == value, f'{key} count differs from answer key'
-        assert result.total == scenario['expected_total']
-        assert result.coins == scenario['expected_coins']
-        return result
-
-    def collect(self, scenario):
-        if not self.actionable('collect_coins'):
-            raise AssertionError('Collect Coins is not enabled/clickable for a positive result')
-        self.phase(scenario, 'collect')
-
-    def close_result(self, scenario):
-        self.phase(scenario, 'close')
-
-    def history(self, period):
-        """Read every log row through an inspected end-of-list sentinel.
-
-        Never treat only visible rows as complete Today/This Week/All Time history.
-        """
-        self.path('history_' + period)
-        spec = self.data.get('history', {})
-        pattern = spec.get('row_pattern')
-        if not pattern:
-            raise CoinConfigurationError('history.row_pattern needs id, coins, recorded_at named groups')
-        rows = {}
-        for _ in range(spec.get('max_pages', 20)):
-            for element in self.driver.find_elements(*self.locator('log_rows')):
-                label = element.get_attribute('content-desc') or element.get_attribute('text') or element.text or ''
-                match = re.fullmatch(pattern, label, re.DOTALL)
-                if not match or not {'id', 'coins', 'recorded_at'} <= set(match.groupdict()):
-                    raise CoinConfigurationError(f'Log row does not match the configured schema: {label!r}')
-                recorded = datetime.fromisoformat(match['recorded_at'])
-                if recorded.tzinfo is None:
-                    raise CoinConfigurationError('Log timestamps must include a timezone offset')
-                item = CoinTransaction(match['id'], parse_integer(match['coins']), recorded)
-                if item.transaction_id in rows and rows[item.transaction_id] != item:
-                    raise AssertionError('Conflicting values for a repeated transaction ID')
-                rows[item.transaction_id] = item
-            if self.visible('log_end', timeout=1):
-                return list(rows.values())
-            self.steps([{'action': 'scroll', 'target': 'log_scroll_container'}])
-        raise AssertionError('Coin history did not reach its end; completeness cannot be verified')
-
-    def now(self):
-        return datetime.now(self.zone)
-
-    def wait_calendar_boundary(self, kind):
-        """Observe a real boundary; never change emulator/server date or time."""
-        from datetime import timedelta
-        now = self.now()
-        boundary = (now + timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
-        if kind == 'weekly':
-            scheduled = self.data.get('weekly_refresh_time')
-            if not scheduled or not re.fullmatch(r'(?:[01]\d|2[0-3]):[0-5]\d', scheduled):
-                raise CoinConfigurationError('Confirm weekly_refresh_time (HH:MM on Tuesday in server_timezone)')
-            hour, minute = map(int, scheduled.split(':'))
-            boundary = (now + timedelta(days=(1 - now.weekday()) % 7)).replace(
-                hour=hour, minute=minute, second=0, microsecond=0)
-            if boundary <= now:
-                boundary += timedelta(days=7)
-        remaining = (boundary - now).total_seconds()
-        budget = self.data['boundary_max_wait_seconds']
-        if remaining > budget:
-            raise CoinConfigurationError(f'Run near the real {kind} boundary; it is {remaining:.0f}s away, budget is {budget}s')
-        Waits(self.driver, budget + 2).until(lambda _: self.now() >= boundary)
-        return boundary
+    def tap_primary_action(self):
+        state, locator = self.primary_action()
+        self.click(locator)
+        if state in {"start", "resume"}:
+            try:
+                self.element(self.QUESTION_SCREEN)
+            except TimeoutException as error:
+                raise AssertionError("Quiz question UI did not open") from error
+        return state

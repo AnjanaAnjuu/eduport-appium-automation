@@ -1,5 +1,58 @@
 # Refer a Friend / Share the App
 
+## Focused suite: `test_refer.py`
+
+`pages/Profile/refer_friend/refer_page.py` provides `ReferPage` for these cases:
+
+| Case | Check | Expected result |
+| --- | --- | --- |
+| REF001 | Refer a Friend button | Visible, enabled, and within the screen |
+| REF002 | Click Refer a Friend | The configured destination opens with the full expected URL |
+| REF003 | Tap Refer a Friend three times rapidly | One native share sheet is visible, exactly one launch is recorded, and dismissing it returns to Profile without another sheet |
+
+```sh
+REFER_FRIEND_TEST_DATA=/absolute/path/referral.json \
+  venv/bin/python -m pytest tests/Profile/refer_friend/test_refer.py -v -rs
+```
+
+With no `REFER_FRIEND_TEST_DATA`, the focused suite now uses the inspected
+Android emulator flow: authenticates the supplied account, opens Profile,
+scrolls to `Refer\na Friend`, and reads native Android activity events for
+duplicate launches. Run it with:
+
+```sh
+TEST_MOBILE_NUMBER=<authorized-number> TEST_VALID_OTP=<otp> ALLOW_OTP_SEND=true \
+  venv/bin/python -m pytest tests/Profile/refer_friend/test_refer.py -v -rs \
+  --junitxml=reports/refer_latest.xml
+```
+
+Appium and the emulator must be running. `ANDROID_UDID` defaults to
+`emulator-5554` for event collection; `ADB_PATH` can override adb discovery.
+The inspected app opens a native share sheet, so REF002 currently fails the
+requested direct-browser-navigation expectation. This is a behavior/requirement
+mismatch, not missing test setup. The test does not treat a preview URL as a
+browser destination.
+
+When an explicit data path is supplied, the suite uses the `referral_session`
+and `referral_share_probe` integration contracts documented below. Missing
+custom providers produce explicit skips. Invalid configured selectors fail setup.
+The session must restore navigation state even if an assertion fails.
+
+All three cases need inspected `profile_screen` and `refer_friend` selectors
+and a nonempty `routes.profile`. The route should finish with the referral
+button visible; include the actual scroll navigation in the session/route
+implementation when needed. REF002 also needs `download_url`,
+`url_destination` (the loaded browser/webview destination), and `opened_url`
+(the full browser address, using a selector attribute if appropriate).
+REF003 needs `share_sheet` and `cancel_share` selectors, plus the share probe.
+Optional `focused_cases.REF003.tap_count` accepts 2–5, default 3.
+
+REF002 tests **direct URL navigation caused by the button click**. A URL merely
+shown in the share preview does not satisfy it. If the actual product only
+opens a share sheet, that expectation needs clarification before configuring
+this case; the existing TC_003 and TC_013 cover shared content and recipient
+URL navigation instead. REF003 neither chooses a recipient nor sends a message.
+
 `pages/Profile/refer_friend/refer_friend_page.py` and `test_refer_friend.py`
 implement TC_001–TC_025. The image is a UI reference: its preview is truncated,
 so the actual URL, message, locale and recipient destination are not inferred.

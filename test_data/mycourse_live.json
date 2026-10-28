@@ -1,0 +1,110 @@
+{
+  "mode": "live_existing_account",
+  "selectors": {
+    "title": {
+      "locator": [
+        "accessibility id",
+        "My Course"
+      ],
+      "attribute": "content-desc"
+    },
+    "help": {
+      "locator": [
+        "accessibility id",
+        "Help"
+      ],
+      "attribute": "content-desc"
+    },
+    "previous_screen": {
+      "locator": [
+        "accessibility id",
+        "Profile"
+      ],
+      "attribute": "content-desc"
+    },
+    "help_screen": {
+      "locator": [
+        "accessibility id",
+        "Reach Us"
+      ],
+      "attribute": "content-desc"
+    },
+    "contact_screen": {
+      "locator": [
+        "accessibility id",
+        "Reach Us"
+      ],
+      "attribute": "content-desc"
+    },
+    "active_empty": {
+      "locator": [
+        "accessibility id",
+        "Your active subscriptions will appear here."
+      ],
+      "attribute": "content-desc"
+    },
+    "expired_empty": {
+      "locator": [
+        "accessibility id",
+        "Your expired subscriptions will appear here."
+      ],
+      "attribute": "content-desc"
+    },
+    "empty_message": {
+      "locator": [
+        "accessibility id",
+        "Your active subscriptions will appear here."
+      ],
+      "attribute": "content-desc"
+    },
+    "missing_subscription": {
+      "locator": [
+        "accessibility id",
+        "Not seeing your subscription?"
+      ],
+      "attribute": "content-desc"
+    },
+    "contact_us": {
+      "locator": [
+        "accessibility id",
+        "Contact Us"
+      ],
+      "attribute": "content-desc"
+    },
+    "back": [
+      "xpath",
+      "//*[@content-desc='My Course']/preceding-sibling::android.view.View[@clickable='true'][1]"
+    ],
+    "active_tab": {
+      "locator": [
+        "accessibility id",
+        "Active\nTab 1 of 2"
+      ],
+      "attribute": "content-desc",
+      "first_line": true
+    },
+    "active_content": [
+      "xpath",
+      "//*[@content-desc=\"Active\nTab 1 of 2\" and @selected='true']/parent::*/following-sibling::android.view.View"
+    ],
+    "expired_tab": {
+      "locator": [
+        "accessibility id",
+        "Expired\nTab 2 of 2"
+      ],
+      "attribute": "content-desc",
+      "first_line": true
+    },
+    "expired_content": [
+      "xpath",
+      "//*[@content-desc=\"Expired\nTab 2 of 2\" and @selected='true']/parent::*/following-sibling::android.view.View"
+    ],
+    "empty_illustration": [
+      "xpath",
+      "//*[@content-desc='Your active subscriptions will appear here.']/preceding-sibling::android.widget.ImageView"
+    ]
+  },
+  "expected": null,
+  "expiry_pattern": "\\d{2} [A-Z][a-z]{2} \\d{4}",
+  "expiry_format": "%d %b %Y"
+}

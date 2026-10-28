@@ -13,6 +13,43 @@ PREFERENCE_TEST_DATA=/absolute/path/preferences.json \
 
 ## Configuration
 
+### Default Android emulator data
+
+Without `PREFERENCE_TEST_DATA`, the suite loads
+`test_data/preference_live.json`. Its selectors were inspected on the Android
+Eduport development build. It includes Profile → Preferences navigation,
+quality options and resolutions, audio/sticker switches, and Study, Live
+Reminder Notifications, and Do Not Disturb switches. Supported cases have
+`ready: true`; other cases have a specific `skip_reason` describing the missing
+evidence or platform prerequisite.
+
+```sh
+TEST_MOBILE_NUMBER=<authorized-number> TEST_VALID_OTP=<otp> ALLOW_OTP_SEND=true \
+  venv/bin/python -m pytest tests/Profile/preference -v -rs \
+  --junitxml=reports/preference_latest.xml
+```
+
+The account must have completed onboarding. Account `9995749936` reached
+Enter Your Details; the user approved `9995759936` for the live run instead.
+Credentials remain environment variables and are not saved in this data file.
+The live fixture verifies account ownership and restores each changed switch
+and network quality after its case, including when assertions fail.
+The notification-update case also temporarily grants the app Android DND
+access, snapshots the device DND mode, and restores both after the case.
+Startup notification prompts and the birthday reminder are dismissed without
+confirming or editing the date of birth. The inspected quality sheet stays open
+after saving a choice; the live page closes it with Back and checks the saved
+network value. Missing accessibility labels returned as the literal `null`
+are treated as missing, rather than passing the label assertion.
+
+The native hierarchy merges network labels and values into one node, and
+quality choices expose no usable selected/checked state. Geometry and selection
+indicator cases therefore need additional visual evidence. Decoder measurements,
+network/fault injection, visual baselines, iOS/tablet devices, and approved
+performance/retention rules are not fabricated from the settings screen.
+
+### Custom integration data
+
 Set `PREFERENCE_TEST_DATA` to independently authored JSON:
 
 ```json

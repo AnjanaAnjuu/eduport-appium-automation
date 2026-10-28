@@ -1,0 +1,270 @@
+{
+  "ready": false,
+  "mobile_number": "9995759936",
+  "course_name": "JEE Repeater 2027",
+  "select_course_steps": [],
+  "analysis_selectors": {},
+  "tracker_selectors": {
+    "study": [],
+    "practice": [],
+    "exam": []
+  },
+  "flow_selectors": {
+    "selected_course": []
+  },
+  "activities": {
+    "video_subtopic": {
+      "ready": false,
+      "component": "study",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": []
+      }
+    },
+    "video_concept_speed": {
+      "ready": false,
+      "component": "study",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": []
+      },
+      "playback_speed": null,
+      "source_duration_seconds": null
+    },
+    "video_seek_skip": {
+      "ready": false,
+      "component": "study",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": []
+      }
+    },
+    "video_review": {
+      "ready": false,
+      "component": "study",
+      "expected_delta_seconds": [
+        0,
+        0
+      ],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": []
+      }
+    },
+    "pdf_subtopic": {
+      "ready": false,
+      "component": "study",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": []
+      }
+    },
+    "pdf_resource_reopen": {
+      "ready": false,
+      "component": "study",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": []
+      }
+    },
+    "pdf_concept": {
+      "ready": false,
+      "component": "study",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": []
+      }
+    },
+    "class_notes": {
+      "ready": false,
+      "component": "study",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": []
+      }
+    },
+    "topic_concept_questions": {
+      "ready": false,
+      "component": "study",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": [],
+        "check_pending": [],
+        "resume": []
+      },
+      "check_before_submit": true
+    },
+    "daily_task_problem": {
+      "ready": false,
+      "component": "practice",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": [],
+        "check_pending": [],
+        "resume": []
+      },
+      "check_before_submit": true
+    },
+    "daily_task_quick": {
+      "ready": false,
+      "component": "practice",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": [],
+        "check_pending": [],
+        "resume": []
+      },
+      "check_before_submit": true
+    },
+    "custom_task_problem": {
+      "ready": false,
+      "component": "practice",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": [],
+        "check_pending": [],
+        "resume": []
+      },
+      "check_before_submit": true
+    },
+    "custom_task_quick": {
+      "ready": false,
+      "component": "practice",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": [],
+        "check_pending": [],
+        "resume": []
+      },
+      "check_before_submit": true
+    },
+    "home_practice_problem": {
+      "ready": false,
+      "component": "practice",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": [],
+        "check_pending": [],
+        "resume": []
+      },
+      "check_before_submit": true
+    },
+    "home_practice_quick": {
+      "ready": false,
+      "component": "practice",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": [],
+        "check_pending": [],
+        "resume": []
+      },
+      "check_before_submit": true
+    },
+    "practice_one_question_screen_off": {
+      "ready": false,
+      "component": "practice",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": [],
+        "check_pending": [],
+        "resume": []
+      },
+      "check_before_submit": true,
+      "question_count": 1
+    },
+    "practice_question_cap": {
+      "ready": false,
+      "component": "practice",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": [],
+        "check_pending": [],
+        "resume": []
+      },
+      "check_before_submit": true,
+      "question_count": 1
+    },
+    "exam_current": {
+      "ready": false,
+      "component": "exam",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": [],
+        "check_pending": [],
+        "resume": []
+      },
+      "check_before_submit": true,
+      "exam_id": ""
+    },
+    "exam_past": {
+      "ready": false,
+      "component": "exam",
+      "expected_delta_seconds": [],
+      "phases": {
+        "start": [],
+        "attempt": [],
+        "submit": [],
+        "return_to_tracker": [],
+        "check_pending": [],
+        "resume": []
+      },
+      "check_before_submit": true,
+      "exam_id": ""
+    }
+  },
+  "expected_exam_total_seconds": null,
+  "exam_total_tolerance_seconds": 0
+}

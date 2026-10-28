@@ -12,9 +12,11 @@ from utils.signup_support import SignupPrerequisiteMissing, SignupStagingClient
 
 def pytest_collection_modifyitems(items):
     """Gate real SMS requests before any Appium session is created."""
-    allow_send = os.getenv("ALLOW_OTP_SEND", "false").lower() == "true"
-    mobile_number = os.getenv("TEST_MOBILE_NUMBER", "").strip()
     for item in items:
+        credentials = getattr(item.module, 'TEST_CREDENTIALS', {})
+        item_allow_send = os.getenv('ALLOW_OTP_SEND', str(credentials.get('ALLOW_OTP_SEND', 'false'))).lower() == 'true'
+        item_mobile = os.getenv('TEST_MOBILE_NUMBER', credentials.get('TEST_MOBILE_NUMBER', '')).strip()
+        item_otp = os.getenv('TEST_VALID_OTP', credentials.get('TEST_VALID_OTP', ''))
         if item.get_closest_marker("signup") and os.getenv("ALLOW_SIGNUP_TESTS", "false").lower() != "true":
             item.add_marker(pytest.mark.skip(
                 reason="Signup changes onboarding state; configure staging prerequisites and set ALLOW_SIGNUP_TESTS=true"
@@ -23,11 +25,11 @@ def pytest_collection_modifyitems(items):
             item.add_marker(pytest.mark.skip(
                 reason="Coin/quiz actions change account state; configure staging data and set ALLOW_COIN_TESTS=true"
             ))
-        if item.get_closest_marker("sends_otp") and not (allow_send and mobile_number):
+        if item.get_closest_marker("sends_otp") and not (item_allow_send and item_mobile):
             item.add_marker(pytest.mark.skip(
                 reason="Requires authorized TEST_MOBILE_NUMBER and ALLOW_OTP_SEND=true"
             ))
-        if item.get_closest_marker("requires_valid_otp") and not os.getenv("TEST_VALID_OTP"):
+        if item.get_closest_marker("requires_valid_otp") and not item_otp:
             item.add_marker(pytest.mark.skip(reason="Requires TEST_VALID_OTP"))
 
 
@@ -36,7 +38,8 @@ def pytest_runtest_makereport(item, call):
     outcome = yield
     report = outcome.get_result()
     if report.failed and report.when in {"setup", "call"}:
-        appium_driver = item.funcargs.get("driver") or getattr(item, "_appium_driver", None)
+        appium_driver = (item.funcargs.get("driver") or item.funcargs.get("study_driver")
+                         or getattr(item, "_appium_driver", None))
         if appium_driver is not None:
             try:
                 path = take_screenshot(appium_driver, item.nodeid)

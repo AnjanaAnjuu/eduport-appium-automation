@@ -72,5 +72,6 @@ class PreferencesPage(BasePage):
     def accessible(self, key):
         element = self.wait.clickable(self.locator(key))
         attribute = self.data.get('accessibility_attribute', 'content-desc')
-        assert element.get_attribute(attribute), f'{key} has no accessible label'
+        label = (element.get_attribute(attribute) or '').strip()
+        assert label.lower() not in ('', 'null', 'none'), f'{key} has no accessible label'
         assert self.is_element_within_screen(element, self.driver.get_window_size())

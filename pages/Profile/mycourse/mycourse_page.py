@@ -33,7 +33,8 @@ class MyCoursePage(BasePage):
         spec = self.selectors[name]
         attribute = spec.get('attribute') if isinstance(spec, dict) else None
         value = element.get_attribute(attribute) if attribute else element.text
-        return (value or '').strip()
+        value = (value or '').strip()
+        return value.splitlines()[0] if isinstance(spec, dict) and spec.get('first_line') and value else value
 
     def tap(self, name):
         self.wait.clickable(self.locator(name)).click()
@@ -68,4 +69,3 @@ class MyCoursePage(BasePage):
             assert bounds['x'] <= rect['x'] and bounds['y'] <= rect['y']
             assert rect['x'] + rect['width'] <= bounds['x'] + bounds['width'], f'{name} overflows horizontally'
             assert rect['y'] + rect['height'] <= bounds['y'] + bounds['height'], f'{name} overflows vertically'
-

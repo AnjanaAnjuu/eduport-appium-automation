@@ -1,0 +1,414 @@
+{
+  "mode": "live_android",
+  "app_id": "com.dev.eduportlms",
+  "selectors": {
+    "title": {
+      "locator": [
+        "accessibility id",
+        "Preferences"
+      ],
+      "attribute": "content-desc"
+    },
+    "video_section": {
+      "locator": [
+        "accessibility id",
+        "Video Quality Preferences"
+      ],
+      "attribute": "content-desc"
+    },
+    "audio_section": {
+      "locator": [
+        "accessibility id",
+        "Audio & Stickers"
+      ],
+      "attribute": "content-desc"
+    },
+    "notification_section": {
+      "locator": [
+        "accessibility id",
+        "Notification"
+      ],
+      "attribute": "content-desc"
+    },
+    "back": {
+      "locator": [
+        "accessibility id",
+        "Back"
+      ],
+      "attribute": "content-desc"
+    },
+    "previous_screen": {
+      "locator": [
+        "accessibility id",
+        "Profile"
+      ],
+      "attribute": "content-desc"
+    },
+    "preferences_entry": {
+      "locator": [
+        "accessibility id",
+        "Preferences"
+      ],
+      "attribute": "content-desc"
+    },
+    "sound_effects": [
+      "xpath",
+      "//*[@content-desc='Sound Effects']/following-sibling::android.widget.Switch[1]"
+    ],
+    "app_launch_sound": [
+      "xpath",
+      "//*[@content-desc='App Launch Sound']/following-sibling::android.widget.Switch[1]"
+    ],
+    "stickers": [
+      "xpath",
+      "//*[@content-desc='Stickers']/following-sibling::android.widget.Switch[1]"
+    ],
+    "app_icon_change": [
+      "xpath",
+      "//*[@content-desc='App Icon Change']/following-sibling::android.widget.Switch[1]"
+    ],
+    "auto": {
+      "locator": [
+        "accessibility id",
+        "Auto (recommended)\nAdjust to give you the best experience for your conditions"
+      ],
+      "attribute": "content-desc"
+    },
+    "high_quality": {
+      "locator": [
+        "accessibility id",
+        "High quality\nUses more data"
+      ],
+      "attribute": "content-desc"
+    },
+    "data_saver": {
+      "locator": [
+        "accessibility id",
+        "Data Saver\nUses less data"
+      ],
+      "attribute": "content-desc"
+    },
+    "advanced": {
+      "locator": [
+        "xpath",
+        "//*[starts-with(@content-desc,'Advanced') and @clickable='true']"
+      ],
+      "attribute": "content-desc"
+    },
+    "sheet_backdrop": {
+      "locator": [
+        "accessibility id",
+        "Scrim"
+      ],
+      "attribute": "content-desc"
+    },
+    "720p": {
+      "locator": [
+        "accessibility id",
+        "720p"
+      ],
+      "attribute": "content-desc"
+    },
+    "480p": {
+      "locator": [
+        "accessibility id",
+        "480p"
+      ],
+      "attribute": "content-desc"
+    },
+    "360p": {
+      "locator": [
+        "accessibility id",
+        "360p"
+      ],
+      "attribute": "content-desc"
+    },
+    "240p": {
+      "locator": [
+        "accessibility id",
+        "240p"
+      ],
+      "attribute": "content-desc"
+    },
+    "quality_sheet": {
+      "locator": [
+        "accessibility id",
+        "Auto (recommended)\nAdjust to give you the best experience for your conditions"
+      ],
+      "attribute": "content-desc"
+    },
+    "advanced_sheet": {
+      "locator": [
+        "accessibility id",
+        "720p"
+      ],
+      "attribute": "content-desc"
+    },
+    "mobile_network": {
+      "locator": [
+        "xpath",
+        "//*[starts-with(@content-desc,'Mobile Network')]"
+      ],
+      "attribute": "content-desc"
+    },
+    "mobile_quality": {
+      "locator": [
+        "xpath",
+        "//*[starts-with(@content-desc,'Mobile Network')]"
+      ],
+      "attribute": "content-desc"
+    },
+    "wifi_network": {
+      "locator": [
+        "xpath",
+        "//*[starts-with(@content-desc,'WiFi Network')]"
+      ],
+      "attribute": "content-desc"
+    },
+    "wifi_quality": {
+      "locator": [
+        "xpath",
+        "//*[starts-with(@content-desc,'WiFi Network')]"
+      ],
+      "attribute": "content-desc"
+    },
+    "study": [
+      "xpath",
+      "//*[@content-desc='Study']/following-sibling::android.widget.Switch[1]"
+    ],
+    "live_reminders": [
+      "xpath",
+      "//*[@content-desc='Live Reminder Notifications']/following-sibling::android.widget.Switch[1]"
+    ],
+    "do_not_disturb": [
+      "xpath",
+      "//*[@content-desc='Do Not Disturb']/following-sibling::android.widget.Switch[1]"
+    ]
+  },
+  "cases": {
+    "TC_001": {
+      "ready": true
+    },
+    "TC_002": {
+      "ready": true
+    },
+    "TC_003": {
+      "ready": true
+    },
+    "TC_004": {
+      "ready": true
+    },
+    "TC_005": {
+      "ready": true
+    },
+    "TC_006": {
+      "ready": false,
+      "skip_reason": "The network label and value share one accessibility node; verifying separate right-aligned bounds needs image/layout evidence."
+    },
+    "TC_007": {
+      "ready": false,
+      "skip_reason": "The network label and value share one accessibility node; verifying separate right-aligned bounds needs image/layout evidence."
+    },
+    "TC_008": {
+      "ready": true
+    },
+    "TC_009": {
+      "ready": true
+    },
+    "TC_010": {
+      "ready": true
+    },
+    "TC_011": {
+      "ready": true
+    },
+    "TC_012": {
+      "ready": true
+    },
+    "TC_013": {
+      "ready": true
+    },
+    "TC_014": {
+      "ready": true
+    },
+    "TC_015": {
+      "ready": true
+    },
+    "TC_016": {
+      "ready": true
+    },
+    "TC_017": {
+      "ready": true
+    },
+    "TC_018": {
+      "ready": true
+    },
+    "TC_019": {
+      "ready": true
+    },
+    "TC_020": {
+      "ready": true
+    },
+    "TC_021": {
+      "ready": true
+    },
+    "TC_022": {
+      "ready": true
+    },
+    "TC_023": {
+      "ready": true,
+      "qualities": {
+        "mobile": "240p",
+        "wifi": "720p"
+      }
+    },
+    "TC_024": {
+      "ready": true,
+      "qualities": {
+        "mobile": "240p",
+        "wifi": "720p"
+      }
+    },
+    "TC_025": {
+      "ready": false,
+      "skip_reason": "Requires known Chemistry video access, controlled network fixtures, and actual player resolution/progress evidence."
+    },
+    "TC_026": {
+      "ready": false,
+      "skip_reason": "Requires known Chemistry video access, controlled network fixtures, and actual player resolution/progress evidence."
+    },
+    "TC_027": {
+      "ready": false,
+      "skip_reason": "Requires known Chemistry video access, controlled network fixtures, and actual player resolution/progress evidence."
+    },
+    "TC_028": {
+      "ready": false,
+      "skip_reason": "Requires known Chemistry video access, controlled network fixtures, and actual player resolution/progress evidence."
+    },
+    "TC_029": {
+      "ready": false,
+      "skip_reason": "Requires known Chemistry video access, controlled network fixtures, and actual player resolution/progress evidence."
+    },
+    "TC_030": {
+      "ready": false,
+      "skip_reason": "Requires known Chemistry video access, controlled network fixtures, and actual player resolution/progress evidence."
+    },
+    "TC_031": {
+      "ready": true
+    },
+    "TC_032": {
+      "ready": true
+    },
+    "TC_033": {
+      "ready": true
+    },
+    "TC_034": {
+      "ready": true
+    },
+    "TC_035": {
+      "ready": true
+    },
+    "TC_036": {
+      "ready": true
+    },
+    "TC_037": {
+      "ready": true
+    },
+    "TC_038": {
+      "ready": true
+    },
+    "TC_039": {
+      "ready": true
+    },
+    "TC_040": {
+      "ready": true
+    },
+    "TC_041": {
+      "ready": false,
+      "skip_reason": "Requires a network control fixture and confirmed offline behavior."
+    },
+    "TC_042": {
+      "ready": false,
+      "skip_reason": "Requires a network control fixture and confirmed offline behavior."
+    },
+    "TC_043": {
+      "ready": false,
+      "skip_reason": "Requires an approved load/save time limit and inspected loading/error controls."
+    },
+    "TC_044": {
+      "ready": false,
+      "skip_reason": "Requires a controlled API fault fixture and the expected error message."
+    },
+    "TC_045": {
+      "ready": false,
+      "skip_reason": "Requires approved visual baselines and device/orientation rules."
+    },
+    "TC_046": {
+      "ready": true
+    },
+    "TC_047": {
+      "ready": true
+    },
+    "TC_048": {
+      "ready": false,
+      "skip_reason": "The quality options expose selected=false and checked=false even for the active choice; an inspected visual selection probe is required."
+    },
+    "TC_049": {
+      "ready": false,
+      "skip_reason": "Requires approved visual baselines and device/orientation rules."
+    },
+    "TC_050": {
+      "ready": false,
+      "skip_reason": "Requires approved visual baselines and device/orientation rules."
+    },
+    "TC_051": {
+      "ready": false,
+      "skip_reason": "Requires approved visual baselines and device/orientation rules."
+    },
+    "TC_052": {
+      "ready": true
+    },
+    "TC_053": {
+      "ready": false,
+      "skip_reason": "Requires an iOS device; this run uses an Android emulator."
+    },
+    "TC_054": {
+      "ready": false,
+      "skip_reason": "Requires a tablet and its approved visual baseline."
+    },
+    "TC_055": {
+      "ready": true
+    },
+    "TC_056": {
+      "ready": true
+    },
+    "TC_057": {
+      "ready": false,
+      "skip_reason": "Requires confirmed preference persistence rules after logout/login."
+    },
+    "TC_058": {
+      "ready": true
+    },
+    "TC_059": {
+      "ready": false,
+      "skip_reason": "Requires an approved load/save time limit and inspected loading/error controls."
+    },
+    "TC_060": {
+      "ready": false,
+      "skip_reason": "Requires approved visual baselines and device/orientation rules."
+    }
+  },
+  "notification_controls": [
+    "study",
+    "live_reminders",
+    "do_not_disturb"
+  ],
+  "quality_labels": {
+    "Auto": "Auto",
+    "High Quality": "High Quality",
+    "Data Saver": "Data Saver",
+    "720p": "720p",
+    "480p": "480p",
+    "360p": "360p",
+    "240p": "240p"
+  }
+}
